@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Figuras2D.Models
+﻿namespace _2d_shape.Models
 {
-    internal class Shapes
+    public abstract class Shapes
     {
+        public abstract double CalculateArea();
+        public abstract double CalculatePerimeter();
+        public abstract bool IsValid();
     }
 }
