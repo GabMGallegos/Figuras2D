@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Figuras2D
+namespace Figuras2D.Views
 {
-    public partial class Form1 : Form
+    public partial class FrmHome : Form
     {
-        public Form1()
+        public FrmHome()
         {
             InitializeComponent();
         }
