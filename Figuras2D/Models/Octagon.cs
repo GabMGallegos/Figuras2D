@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Figuras2D.Models
 {
-    public class Octagon : Shape
+    public class Octagon : Shapes
     {
         public double Side { get; set; }
 

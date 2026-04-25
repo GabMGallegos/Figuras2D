@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Figuras2D.Models;
 
 namespace Figuras2D.Presenters
 {
-    internal class CrossPresenter
+    public class CrossPresenter
     {
+        private readonly Cross _cross;
+
+        public CrossPresenter(Cross cross)
+        {
+            _cross = cross;
+        }
+
+        public double Area => _cross.CalculateArea();
+
+        public double Perimeter => _cross.CalculatePerimeter();
+
+        public bool IsValid => _cross.IsValid();
     }
 }

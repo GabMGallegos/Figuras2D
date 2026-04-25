@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Figuras2D.Models;
 
-namespace Figuras2D.Presenters
+namespace _2d_shape.Presenters
 {
-    internal class PiePresenter
+    public class PiePresenter
     {
+        private readonly Pie _pie;
+
+        public PiePresenter(Pie pie)
+        {
+            _pie = pie;
+        }
+
+        public double Area => _pie.CalculateArea();
+
+        public double Perimeter => _pie.CalculatePerimeter();
+
+        public bool IsValid => _pie.IsValid();
     }
 }
