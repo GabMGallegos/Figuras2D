@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Figuras2D.Models;
 
-namespace Figuras2D.Presenters
+namespace _2d_shape.Presenters
 {
-    internal class RhombusPresenter
+    public class RhombusPresenter
     {
+        private readonly Rhombus _rhombus;
+
+        public RhombusPresenter(Rhombus rhombus)
+        {
+            _rhombus = rhombus;
+        }
+
+        public double Area => _rhombus.CalculateArea();
+
+        public double Perimeter => _rhombus.CalculatePerimeter();
+
+        public bool IsValid => _rhombus.IsValid();
     }
 }
