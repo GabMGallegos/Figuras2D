@@ -1,4 +1,4 @@
-﻿namespace _2d_shape.Models
+﻿namespace Figuras2D.Models
 {
     public abstract class Shapes
     {
