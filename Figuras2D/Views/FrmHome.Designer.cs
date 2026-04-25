@@ -30,6 +30,13 @@
         {
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.msFigurasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCruzToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCorazonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCometaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOctagonoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miPastelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miRomboToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSemicirculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,9 +53,66 @@
             // 
             // msFigurasToolStripMenuItem
             // 
+            this.msFigurasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miCruzToolStripMenuItem,
+            this.miCorazonToolStripMenuItem,
+            this.miCometaToolStripMenuItem,
+            this.miOctagonoToolStripMenuItem,
+            this.miPastelToolStripMenuItem,
+            this.miRomboToolStripMenuItem,
+            this.miSemicirculoToolStripMenuItem});
             this.msFigurasToolStripMenuItem.Name = "msFigurasToolStripMenuItem";
             this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(70, 24);
             this.msFigurasToolStripMenuItem.Text = "Figuras";
+            // 
+            // miCruzToolStripMenuItem
+            // 
+            this.miCruzToolStripMenuItem.Name = "miCruzToolStripMenuItem";
+            this.miCruzToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.miCruzToolStripMenuItem.Text = "Cruz";
+            this.miCruzToolStripMenuItem.Click += new System.EventHandler(this.miCruzToolStripMenuItem_Click);
+            // 
+            // miCorazonToolStripMenuItem
+            // 
+            this.miCorazonToolStripMenuItem.Name = "miCorazonToolStripMenuItem";
+            this.miCorazonToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.miCorazonToolStripMenuItem.Text = "Corazón";
+            this.miCorazonToolStripMenuItem.Click += new System.EventHandler(this.miCorazonToolStripMenuItem_Click);
+            // 
+            // miCometaToolStripMenuItem
+            // 
+            this.miCometaToolStripMenuItem.Name = "miCometaToolStripMenuItem";
+            this.miCometaToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.miCometaToolStripMenuItem.Text = "Cometa";
+            this.miCometaToolStripMenuItem.Click += new System.EventHandler(this.miCometaToolStripMenuItem_Click);
+            // 
+            // miOctagonoToolStripMenuItem
+            // 
+            this.miOctagonoToolStripMenuItem.Name = "miOctagonoToolStripMenuItem";
+            this.miOctagonoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.miOctagonoToolStripMenuItem.Text = "Octágono";
+            this.miOctagonoToolStripMenuItem.Click += new System.EventHandler(this.miOctagonoToolStripMenuItem_Click);
+            // 
+            // miPastelToolStripMenuItem
+            // 
+            this.miPastelToolStripMenuItem.Name = "miPastelToolStripMenuItem";
+            this.miPastelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.miPastelToolStripMenuItem.Text = "Pastel ";
+            this.miPastelToolStripMenuItem.Click += new System.EventHandler(this.miPastelToolStripMenuItem_Click);
+            // 
+            // miRomboToolStripMenuItem
+            // 
+            this.miRomboToolStripMenuItem.Name = "miRomboToolStripMenuItem";
+            this.miRomboToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.miRomboToolStripMenuItem.Text = "Rombo";
+            this.miRomboToolStripMenuItem.Click += new System.EventHandler(this.miRomboToolStripMenuItem_Click);
+            // 
+            // miSemicirculoToolStripMenuItem
+            // 
+            this.miSemicirculoToolStripMenuItem.Name = "miSemicirculoToolStripMenuItem";
+            this.miSemicirculoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.miSemicirculoToolStripMenuItem.Text = "Semicírculo";
+            this.miSemicirculoToolStripMenuItem.Click += new System.EventHandler(this.miSemicirculoToolStripMenuItem_Click);
             // 
             // FrmHome
             // 
@@ -70,5 +134,12 @@
         #endregion
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.ToolStripMenuItem msFigurasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miCruzToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miCorazonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miCometaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miOctagonoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miPastelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miRomboToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miSemicirculoToolStripMenuItem;
     }
 }
