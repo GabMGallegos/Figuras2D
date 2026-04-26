@@ -84,5 +84,12 @@ namespace Figuras2D.Views
             frmCircle.MdiParent = this;
             frmCircle.Show();
         }
+
+        private void trianguloToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmTriangle frmTriangle = new FrmTriangle();
+            frmTriangle.MdiParent = this;
+            frmTriangle.Show();
+        }
     }
 }

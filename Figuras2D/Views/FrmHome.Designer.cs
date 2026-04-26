@@ -50,8 +50,8 @@
             this.msFigurasToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.menuStrip2.Size = new System.Drawing.Size(900, 24);
+            this.menuStrip2.Padding = new System.Windows.Forms.Padding(5, 1, 0, 1);
+            this.menuStrip2.Size = new System.Drawing.Size(600, 24);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -69,7 +69,7 @@
             this.circuloToolStripMenuItem,
             this.trianguloToolStripMenuItem});
             this.msFigurasToolStripMenuItem.Name = "msFigurasToolStripMenuItem";
-            this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
             this.msFigurasToolStripMenuItem.Text = "Figuras";
             // 
             // miCruzToolStripMenuItem
@@ -140,15 +140,16 @@
             this.trianguloToolStripMenuItem.Name = "trianguloToolStripMenuItem";
             this.trianguloToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.trianguloToolStripMenuItem.Text = "Triangulo";
+            this.trianguloToolStripMenuItem.Click += new System.EventHandler(this.trianguloToolStripMenuItem_Click);
             // 
             // FrmHome
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 562);
+            this.ClientSize = new System.Drawing.Size(600, 365);
             this.Controls.Add(this.menuStrip2);
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "FrmHome";
             this.Text = "FrmHome";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
