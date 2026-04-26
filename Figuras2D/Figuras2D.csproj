@@ -47,7 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Circle.cs" />
+<<<<<<< Updated upstream
     <Compile Include="Models\Circle.cs" />
+=======
+    <Compile Include="Models\Triangle.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Models\Cross.cs" />
     <Compile Include="Models\Heart.cs" />
     <Compile Include="Models\Kite.cs" />
@@ -57,6 +61,7 @@
     <Compile Include="Models\Semicircle.cs" />
     <Compile Include="Models\Square.cs" />
     <Compile Include="Models\Shapes.cs" />
+    <Compile Include="Presenters\TrianglePresenter.cs" />
     <Compile Include="Presenters\CirclePresenter.cs" />
     <Compile Include="Presenters\SquarePresenter.cs" />
     <Compile Include="Presenters\CrossPresenter.cs" />
@@ -127,6 +132,12 @@
     </Compile>
     <Compile Include="Views\FrmSemicircle.Designer.cs">
       <DependentUpon>FrmSemicircle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmTriangle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmTriangle.Designer.cs">
+      <DependentUpon>FrmTriangle.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
