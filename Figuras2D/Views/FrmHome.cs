@@ -98,5 +98,12 @@ namespace Figuras2D.Views
             frmRectangle.MdiParent = this; 
             frmRectangle.Show();
         }
+
+        private void estrellaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmStar frmStar = new FrmStar();
+            frmStar.MdiParent = this; 
+            frmStar.Show();
+        }
     }
 }

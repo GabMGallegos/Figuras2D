@@ -41,6 +41,7 @@
             this.circuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trianguloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rectanguloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.estrellaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,7 +70,8 @@
             this.cuadradoToolStripMenuItem,
             this.circuloToolStripMenuItem,
             this.trianguloToolStripMenuItem,
-            this.rectanguloToolStripMenuItem});
+            this.rectanguloToolStripMenuItem,
+            this.estrellaToolStripMenuItem});
             this.msFigurasToolStripMenuItem.Name = "msFigurasToolStripMenuItem";
             this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.msFigurasToolStripMenuItem.Text = "Figuras";
@@ -151,6 +153,13 @@
             this.rectanguloToolStripMenuItem.Text = "Rectangulo";
             this.rectanguloToolStripMenuItem.Click += new System.EventHandler(this.rectanguloToolStripMenuItem_Click);
             // 
+            // estrellaToolStripMenuItem
+            // 
+            this.estrellaToolStripMenuItem.Name = "estrellaToolStripMenuItem";
+            this.estrellaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.estrellaToolStripMenuItem.Text = "Estrella";
+            this.estrellaToolStripMenuItem.Click += new System.EventHandler(this.estrellaToolStripMenuItem_Click);
+            // 
             // FrmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -184,5 +193,6 @@
         private System.Windows.Forms.ToolStripMenuItem circuloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trianguloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rectanguloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem estrellaToolStripMenuItem;
     }
 }
