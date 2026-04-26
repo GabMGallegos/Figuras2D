@@ -77,5 +77,12 @@ namespace Figuras2D.Views
             frmSquare.MdiParent = this;
             frmSquare.Show();
         }
+
+        private void circuloToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FmrCircle frmCircle = new FmrCircle ();
+            frmCircle.MdiParent = this;
+            frmCircle.Show();
+        }
     }
 }

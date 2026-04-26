@@ -38,6 +38,8 @@
             this.miRomboToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miSemicirculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cuadradoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.circuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trianguloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,7 +65,9 @@
             this.miPastelToolStripMenuItem,
             this.miRomboToolStripMenuItem,
             this.miSemicirculoToolStripMenuItem,
-            this.cuadradoToolStripMenuItem});
+            this.cuadradoToolStripMenuItem,
+            this.circuloToolStripMenuItem,
+            this.trianguloToolStripMenuItem});
             this.msFigurasToolStripMenuItem.Name = "msFigurasToolStripMenuItem";
             this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.msFigurasToolStripMenuItem.Text = "Figuras";
@@ -71,49 +75,49 @@
             // miCruzToolStripMenuItem
             // 
             this.miCruzToolStripMenuItem.Name = "miCruzToolStripMenuItem";
-            this.miCruzToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.miCruzToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.miCruzToolStripMenuItem.Text = "Cruz";
             this.miCruzToolStripMenuItem.Click += new System.EventHandler(this.miCruzToolStripMenuItem_Click);
             // 
             // miCorazonToolStripMenuItem
             // 
             this.miCorazonToolStripMenuItem.Name = "miCorazonToolStripMenuItem";
-            this.miCorazonToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.miCorazonToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.miCorazonToolStripMenuItem.Text = "Corazón";
             this.miCorazonToolStripMenuItem.Click += new System.EventHandler(this.miCorazonToolStripMenuItem_Click);
             // 
             // miCometaToolStripMenuItem
             // 
             this.miCometaToolStripMenuItem.Name = "miCometaToolStripMenuItem";
-            this.miCometaToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.miCometaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.miCometaToolStripMenuItem.Text = "Cometa";
             this.miCometaToolStripMenuItem.Click += new System.EventHandler(this.miCometaToolStripMenuItem_Click);
             // 
             // miOctagonoToolStripMenuItem
             // 
             this.miOctagonoToolStripMenuItem.Name = "miOctagonoToolStripMenuItem";
-            this.miOctagonoToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.miOctagonoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.miOctagonoToolStripMenuItem.Text = "Octágono";
             this.miOctagonoToolStripMenuItem.Click += new System.EventHandler(this.miOctagonoToolStripMenuItem_Click);
             // 
             // miPastelToolStripMenuItem
             // 
             this.miPastelToolStripMenuItem.Name = "miPastelToolStripMenuItem";
-            this.miPastelToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.miPastelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.miPastelToolStripMenuItem.Text = "Pastel ";
             this.miPastelToolStripMenuItem.Click += new System.EventHandler(this.miPastelToolStripMenuItem_Click);
             // 
             // miRomboToolStripMenuItem
             // 
             this.miRomboToolStripMenuItem.Name = "miRomboToolStripMenuItem";
-            this.miRomboToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.miRomboToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.miRomboToolStripMenuItem.Text = "Rombo";
             this.miRomboToolStripMenuItem.Click += new System.EventHandler(this.miRomboToolStripMenuItem_Click);
             // 
             // miSemicirculoToolStripMenuItem
             // 
             this.miSemicirculoToolStripMenuItem.Name = "miSemicirculoToolStripMenuItem";
-            this.miSemicirculoToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.miSemicirculoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.miSemicirculoToolStripMenuItem.Text = "Semicírculo";
             this.miSemicirculoToolStripMenuItem.Click += new System.EventHandler(this.miSemicirculoToolStripMenuItem_Click);
             // 
@@ -123,6 +127,19 @@
             this.cuadradoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cuadradoToolStripMenuItem.Text = "Cuadrado";
             this.cuadradoToolStripMenuItem.Click += new System.EventHandler(this.cuadradoToolStripMenuItem_Click);
+            // 
+            // circuloToolStripMenuItem
+            // 
+            this.circuloToolStripMenuItem.Name = "circuloToolStripMenuItem";
+            this.circuloToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.circuloToolStripMenuItem.Text = "Circulo";
+            this.circuloToolStripMenuItem.Click += new System.EventHandler(this.circuloToolStripMenuItem_Click);
+            // 
+            // trianguloToolStripMenuItem
+            // 
+            this.trianguloToolStripMenuItem.Name = "trianguloToolStripMenuItem";
+            this.trianguloToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.trianguloToolStripMenuItem.Text = "Triangulo";
             // 
             // FrmHome
             // 
@@ -154,5 +171,7 @@
         private System.Windows.Forms.ToolStripMenuItem miRomboToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem miSemicirculoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cuadradoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem circuloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem trianguloToolStripMenuItem;
     }
 }
