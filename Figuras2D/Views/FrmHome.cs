@@ -105,5 +105,12 @@ namespace Figuras2D.Views
             frmStar.MdiParent = this; 
             frmStar.Show();
         }
+
+        private void pentagonoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmPentagon frmPentagon = new FrmPentagon();
+            frmPentagon.MdiParent = this;
+            frmPentagon.Show();
+        }
     }
 }
