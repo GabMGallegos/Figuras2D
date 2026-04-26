@@ -46,11 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
     <Compile Include="Models\Circle.cs" />
-=======
     <Compile Include="Models\Triangle.cs" />
->>>>>>> Stashed changes
     <Compile Include="Models\Cross.cs" />
     <Compile Include="Models\Heart.cs" />
     <Compile Include="Models\Kite.cs" />
