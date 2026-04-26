@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Circle.cs" />
+    <Compile Include="Models\Circle.cs" />
     <Compile Include="Models\Cross.cs" />
     <Compile Include="Models\Heart.cs" />
     <Compile Include="Models\Kite.cs" />
