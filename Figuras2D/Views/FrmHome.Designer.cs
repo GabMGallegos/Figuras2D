@@ -40,6 +40,7 @@
             this.cuadradoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.circuloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trianguloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rectanguloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,8 +51,8 @@
             this.msFigurasToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Padding = new System.Windows.Forms.Padding(5, 1, 0, 1);
-            this.menuStrip2.Size = new System.Drawing.Size(600, 24);
+            this.menuStrip2.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.menuStrip2.Size = new System.Drawing.Size(900, 24);
             this.menuStrip2.TabIndex = 1;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -67,9 +68,10 @@
             this.miSemicirculoToolStripMenuItem,
             this.cuadradoToolStripMenuItem,
             this.circuloToolStripMenuItem,
-            this.trianguloToolStripMenuItem});
+            this.trianguloToolStripMenuItem,
+            this.rectanguloToolStripMenuItem});
             this.msFigurasToolStripMenuItem.Name = "msFigurasToolStripMenuItem";
-            this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(57, 22);
+            this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.msFigurasToolStripMenuItem.Text = "Figuras";
             // 
             // miCruzToolStripMenuItem
@@ -142,14 +144,21 @@
             this.trianguloToolStripMenuItem.Text = "Triangulo";
             this.trianguloToolStripMenuItem.Click += new System.EventHandler(this.trianguloToolStripMenuItem_Click);
             // 
+            // rectanguloToolStripMenuItem
+            // 
+            this.rectanguloToolStripMenuItem.Name = "rectanguloToolStripMenuItem";
+            this.rectanguloToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rectanguloToolStripMenuItem.Text = "Rectangulo";
+            this.rectanguloToolStripMenuItem.Click += new System.EventHandler(this.rectanguloToolStripMenuItem_Click);
+            // 
             // FrmHome
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(600, 365);
+            this.ClientSize = new System.Drawing.Size(900, 562);
             this.Controls.Add(this.menuStrip2);
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.Name = "FrmHome";
             this.Text = "FrmHome";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -174,5 +183,6 @@
         private System.Windows.Forms.ToolStripMenuItem cuadradoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem circuloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trianguloToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rectanguloToolStripMenuItem;
     }
 }

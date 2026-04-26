@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Rectangulo.cs" />
     <Compile Include="Models\Circle.cs" />
     <Compile Include="Models\Triangle.cs" />
     <Compile Include="Models\Cross.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Models\Semicircle.cs" />
     <Compile Include="Models\Square.cs" />
     <Compile Include="Models\Shapes.cs" />
+    <Compile Include="Presenters\RectanguloPresenter.cs" />
     <Compile Include="Presenters\TrianglePresenter.cs" />
     <Compile Include="Presenters\CirclePresenter.cs" />
     <Compile Include="Presenters\SquarePresenter.cs" />
@@ -116,6 +118,12 @@
     </Compile>
     <Compile Include="Views\FrmPie.Designer.cs">
       <DependentUpon>FrmPie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmRectangulo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmRectangulo.Designer.cs">
+      <DependentUpon>FrmRectangulo.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmRhombus.cs">
       <SubType>Form</SubType>

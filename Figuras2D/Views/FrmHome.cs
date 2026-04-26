@@ -91,5 +91,12 @@ namespace Figuras2D.Views
             frmTriangle.MdiParent = this;
             frmTriangle.Show();
         }
+
+        private void rectanguloToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmRectangulo frmRectangle = new FrmRectangulo();
+            frmRectangle.MdiParent = this; 
+            frmRectangle.Show();
+        }
     }
 }
