@@ -65,5 +65,17 @@ namespace Figuras2D.Views
             frmSemicircle.MdiParent = this;
             frmSemicircle.Show();
         }
+
+        private void FrmHome_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cuadradoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FmrSquare frmSquare = new FmrSquare();
+            frmSquare.MdiParent = this;
+            frmSquare.Show();
+        }
     }
 }

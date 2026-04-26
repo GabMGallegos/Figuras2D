@@ -53,7 +53,9 @@
     <Compile Include="Models\Pie.cs" />
     <Compile Include="Models\Rhombus.cs" />
     <Compile Include="Models\Semicircle.cs" />
+    <Compile Include="Models\Square.cs" />
     <Compile Include="Models\Shapes.cs" />
+    <Compile Include="Presenters\SquarePresenter.cs" />
     <Compile Include="Presenters\CrossPresenter.cs" />
     <Compile Include="Presenters\HeartPresenter.cs" />
     <Compile Include="Presenters\KitePresenter.cs" />
@@ -63,6 +65,12 @@
     <Compile Include="Presenters\SemicirclePresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\FmrSquare.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FmrSquare.Designer.cs">
+      <DependentUpon>FmrSquare.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmCross.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +128,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\FmrSquare.resx">
+      <DependentUpon>FmrSquare.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmCross.resx">
       <DependentUpon>FrmCross.cs</DependentUpon>
     </EmbeddedResource>
