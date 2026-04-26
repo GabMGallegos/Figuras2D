@@ -1,4 +1,4 @@
-﻿namespace Figuras2D.Views
+﻿namespace Figuras2D
 {
     partial class FrmKite
     {
@@ -37,16 +37,16 @@
             this.lblArea = new System.Windows.Forms.Label();
             this.lblPerimetro = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textLadoB = new System.Windows.Forms.TextBox();
+            this.lblLadoB = new System.Windows.Forms.Label();
+            this.textLadoA = new System.Windows.Forms.TextBox();
+            this.lblLadoA = new System.Windows.Forms.Label();
             this.txtDiagonalMenor = new System.Windows.Forms.TextBox();
             this.lblDiagonalMenor = new System.Windows.Forms.Label();
             this.txtDiagonalMayor = new System.Windows.Forms.TextBox();
             this.lblDiagonalMayor = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblMensaje = new System.Windows.Forms.Label();
-            this.textLadoB = new System.Windows.Forms.TextBox();
-            this.lblLadoB = new System.Windows.Forms.Label();
-            this.textLadoA = new System.Windows.Forms.TextBox();
-            this.lblLadoA = new System.Windows.Forms.Label();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -140,6 +140,38 @@
             this.panel1.Size = new System.Drawing.Size(227, 146);
             this.panel1.TabIndex = 14;
             // 
+            // textLadoB
+            // 
+            this.textLadoB.Location = new System.Drawing.Point(116, 111);
+            this.textLadoB.Name = "textLadoB";
+            this.textLadoB.Size = new System.Drawing.Size(100, 22);
+            this.textLadoB.TabIndex = 7;
+            // 
+            // lblLadoB
+            // 
+            this.lblLadoB.AutoSize = true;
+            this.lblLadoB.Location = new System.Drawing.Point(4, 111);
+            this.lblLadoB.Name = "lblLadoB";
+            this.lblLadoB.Size = new System.Drawing.Size(53, 16);
+            this.lblLadoB.TabIndex = 6;
+            this.lblLadoB.Text = "Lado B:";
+            // 
+            // textLadoA
+            // 
+            this.textLadoA.Location = new System.Drawing.Point(116, 80);
+            this.textLadoA.Name = "textLadoA";
+            this.textLadoA.Size = new System.Drawing.Size(100, 22);
+            this.textLadoA.TabIndex = 5;
+            // 
+            // lblLadoA
+            // 
+            this.lblLadoA.AutoSize = true;
+            this.lblLadoA.Location = new System.Drawing.Point(4, 83);
+            this.lblLadoA.Name = "lblLadoA";
+            this.lblLadoA.Size = new System.Drawing.Size(53, 16);
+            this.lblLadoA.TabIndex = 4;
+            this.lblLadoA.Text = "Lado A:";
+            // 
             // txtDiagonalMenor
             // 
             this.txtDiagonalMenor.Location = new System.Drawing.Point(116, 49);
@@ -179,8 +211,9 @@
             this.panel2.Controls.Add(this.lblMensaje);
             this.panel2.Location = new System.Drawing.Point(365, 54);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(385, 342);
+            this.panel2.Size = new System.Drawing.Size(390, 390);
             this.panel2.TabIndex = 13;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // lblMensaje
             // 
@@ -191,43 +224,11 @@
             this.lblMensaje.Size = new System.Drawing.Size(0, 29);
             this.lblMensaje.TabIndex = 0;
             // 
-            // textLadoB
-            // 
-            this.textLadoB.Location = new System.Drawing.Point(116, 111);
-            this.textLadoB.Name = "textLadoB";
-            this.textLadoB.Size = new System.Drawing.Size(100, 22);
-            this.textLadoB.TabIndex = 7;
-            // 
-            // lblLadoB
-            // 
-            this.lblLadoB.AutoSize = true;
-            this.lblLadoB.Location = new System.Drawing.Point(4, 111);
-            this.lblLadoB.Name = "lblLadoB";
-            this.lblLadoB.Size = new System.Drawing.Size(53, 16);
-            this.lblLadoB.TabIndex = 6;
-            this.lblLadoB.Text = "Lado B:";
-            // 
-            // textLadoA
-            // 
-            this.textLadoA.Location = new System.Drawing.Point(116, 80);
-            this.textLadoA.Name = "textLadoA";
-            this.textLadoA.Size = new System.Drawing.Size(100, 22);
-            this.textLadoA.TabIndex = 5;
-            // 
-            // lblLadoA
-            // 
-            this.lblLadoA.AutoSize = true;
-            this.lblLadoA.Location = new System.Drawing.Point(4, 83);
-            this.lblLadoA.Name = "lblLadoA";
-            this.lblLadoA.Size = new System.Drawing.Size(53, 16);
-            this.lblLadoA.TabIndex = 4;
-            this.lblLadoA.Text = "Lado A:";
-            // 
             // FrmKite
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(948, 554);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);

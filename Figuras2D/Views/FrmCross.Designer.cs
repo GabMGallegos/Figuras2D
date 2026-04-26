@@ -1,4 +1,4 @@
-﻿namespace Figuras2D.Views
+﻿namespace Figuras2D
 {
     partial class FrmCross
     {
@@ -37,7 +37,7 @@
             this.lblArea = new System.Windows.Forms.Label();
             this.lblPerimetro = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtLargo = new System.Windows.Forms.TextBox();
+            this.txtGrosor = new System.Windows.Forms.TextBox();
             this.lblGrosor = new System.Windows.Forms.Label();
             this.txtLongitudTotal = new System.Windows.Forms.TextBox();
             this.lblLongitudTotal = new System.Windows.Forms.Label();
@@ -123,7 +123,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.txtLargo);
+            this.panel1.Controls.Add(this.txtGrosor);
             this.panel1.Controls.Add(this.lblGrosor);
             this.panel1.Controls.Add(this.txtLongitudTotal);
             this.panel1.Controls.Add(this.lblLongitudTotal);
@@ -132,12 +132,12 @@
             this.panel1.Size = new System.Drawing.Size(322, 89);
             this.panel1.TabIndex = 6;
             // 
-            // txtLargo
+            // txtGrosor
             // 
-            this.txtLargo.Location = new System.Drawing.Point(155, 46);
-            this.txtLargo.Name = "txtLargo";
-            this.txtLargo.Size = new System.Drawing.Size(100, 22);
-            this.txtLargo.TabIndex = 3;
+            this.txtGrosor.Location = new System.Drawing.Point(177, 46);
+            this.txtGrosor.Name = "txtGrosor";
+            this.txtGrosor.Size = new System.Drawing.Size(100, 22);
+            this.txtGrosor.TabIndex = 3;
             // 
             // lblGrosor
             // 
@@ -150,7 +150,7 @@
             // 
             // txtLongitudTotal
             // 
-            this.txtLongitudTotal.Location = new System.Drawing.Point(155, 18);
+            this.txtLongitudTotal.Location = new System.Drawing.Point(177, 18);
             this.txtLongitudTotal.Name = "txtLongitudTotal";
             this.txtLongitudTotal.Size = new System.Drawing.Size(100, 22);
             this.txtLongitudTotal.TabIndex = 1;
@@ -171,8 +171,9 @@
             this.panel2.Controls.Add(this.lblMensaje);
             this.panel2.Location = new System.Drawing.Point(403, 54);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(385, 342);
+            this.panel2.Size = new System.Drawing.Size(390, 390);
             this.panel2.TabIndex = 5;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // lblMensaje
             // 
@@ -187,13 +188,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(948, 554);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Name = "FrmCross";
-            this.Text = "FrmCross";
             this.panel4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -216,7 +216,7 @@
         private System.Windows.Forms.Label lblArea;
         private System.Windows.Forms.Label lblPerimetro;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox txtLargo;
+        private System.Windows.Forms.TextBox txtGrosor;
         private System.Windows.Forms.Label lblGrosor;
         private System.Windows.Forms.TextBox txtLongitudTotal;
         private System.Windows.Forms.Label lblLongitudTotal;

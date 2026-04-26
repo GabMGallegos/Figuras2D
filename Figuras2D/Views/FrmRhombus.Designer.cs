@@ -1,4 +1,4 @@
-﻿namespace Figuras2D.Views
+﻿namespace Figuras2D
 {
     partial class FrmRhombus
     {
@@ -189,10 +189,11 @@
             this.panel2.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.lblMensaje);
-            this.panel2.Location = new System.Drawing.Point(365, 70);
+            this.panel2.Location = new System.Drawing.Point(355, 39);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(385, 342);
+            this.panel2.Size = new System.Drawing.Size(390, 390);
             this.panel2.TabIndex = 17;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // lblMensaje
             // 
@@ -207,7 +208,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(948, 554);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);

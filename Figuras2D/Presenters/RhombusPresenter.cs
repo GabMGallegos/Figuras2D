@@ -1,6 +1,6 @@
 ﻿using Figuras2D.Models;
 
-namespace _2d_shape.Presenters
+namespace Figuras2D.Presenters
 {
     public class RhombusPresenter
     {

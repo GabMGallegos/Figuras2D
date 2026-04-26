@@ -1,4 +1,4 @@
-﻿namespace Figuras2D.Views
+﻿namespace Figuras2D
 {
     partial class FrmPie
     {
@@ -37,14 +37,14 @@
             this.lblArea = new System.Windows.Forms.Label();
             this.lblPerimetro = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtAnguloFinal = new System.Windows.Forms.TextBox();
+            this.lblAnguloFinal = new System.Windows.Forms.Label();
+            this.txtAnguloInicial = new System.Windows.Forms.TextBox();
+            this.lblAnguloInicial = new System.Windows.Forms.Label();
             this.txtRadio = new System.Windows.Forms.TextBox();
             this.lblRadio = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblMensaje = new System.Windows.Forms.Label();
-            this.lblAnguloInicial = new System.Windows.Forms.Label();
-            this.lblAnguloFinal = new System.Windows.Forms.Label();
-            this.txtAnguloInicial = new System.Windows.Forms.TextBox();
-            this.txtAnguloFinal = new System.Windows.Forms.TextBox();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -136,6 +136,38 @@
             this.panel1.Size = new System.Drawing.Size(227, 108);
             this.panel1.TabIndex = 14;
             // 
+            // txtAnguloFinal
+            // 
+            this.txtAnguloFinal.Location = new System.Drawing.Point(100, 77);
+            this.txtAnguloFinal.Name = "txtAnguloFinal";
+            this.txtAnguloFinal.Size = new System.Drawing.Size(100, 22);
+            this.txtAnguloFinal.TabIndex = 5;
+            // 
+            // lblAnguloFinal
+            // 
+            this.lblAnguloFinal.AutoSize = true;
+            this.lblAnguloFinal.Location = new System.Drawing.Point(4, 80);
+            this.lblAnguloFinal.Name = "lblAnguloFinal";
+            this.lblAnguloFinal.Size = new System.Drawing.Size(79, 16);
+            this.lblAnguloFinal.TabIndex = 4;
+            this.lblAnguloFinal.Text = "Ángulo final:";
+            // 
+            // txtAnguloInicial
+            // 
+            this.txtAnguloInicial.Location = new System.Drawing.Point(100, 46);
+            this.txtAnguloInicial.Name = "txtAnguloInicial";
+            this.txtAnguloInicial.Size = new System.Drawing.Size(100, 22);
+            this.txtAnguloInicial.TabIndex = 3;
+            // 
+            // lblAnguloInicial
+            // 
+            this.lblAnguloInicial.AutoSize = true;
+            this.lblAnguloInicial.Location = new System.Drawing.Point(4, 49);
+            this.lblAnguloInicial.Name = "lblAnguloInicial";
+            this.lblAnguloInicial.Size = new System.Drawing.Size(89, 16);
+            this.lblAnguloInicial.TabIndex = 2;
+            this.lblAnguloInicial.Text = "Ángulo inicial:";
+            // 
             // txtRadio
             // 
             this.txtRadio.Location = new System.Drawing.Point(100, 15);
@@ -159,8 +191,9 @@
             this.panel2.Controls.Add(this.lblMensaje);
             this.panel2.Location = new System.Drawing.Point(365, 54);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(385, 342);
+            this.panel2.Size = new System.Drawing.Size(390, 390);
             this.panel2.TabIndex = 13;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // lblMensaje
             // 
@@ -171,43 +204,11 @@
             this.lblMensaje.Size = new System.Drawing.Size(0, 29);
             this.lblMensaje.TabIndex = 0;
             // 
-            // lblAnguloInicial
-            // 
-            this.lblAnguloInicial.AutoSize = true;
-            this.lblAnguloInicial.Location = new System.Drawing.Point(4, 49);
-            this.lblAnguloInicial.Name = "lblAnguloInicial";
-            this.lblAnguloInicial.Size = new System.Drawing.Size(89, 16);
-            this.lblAnguloInicial.TabIndex = 2;
-            this.lblAnguloInicial.Text = "Ángulo inicial:";
-            // 
-            // lblAnguloFinal
-            // 
-            this.lblAnguloFinal.AutoSize = true;
-            this.lblAnguloFinal.Location = new System.Drawing.Point(4, 80);
-            this.lblAnguloFinal.Name = "lblAnguloFinal";
-            this.lblAnguloFinal.Size = new System.Drawing.Size(79, 16);
-            this.lblAnguloFinal.TabIndex = 4;
-            this.lblAnguloFinal.Text = "Ángulo final:";
-            // 
-            // txtAnguloInicial
-            // 
-            this.txtAnguloInicial.Location = new System.Drawing.Point(100, 46);
-            this.txtAnguloInicial.Name = "txtAnguloInicial";
-            this.txtAnguloInicial.Size = new System.Drawing.Size(100, 22);
-            this.txtAnguloInicial.TabIndex = 3;
-            // 
-            // txtAnguloFinal
-            // 
-            this.txtAnguloFinal.Location = new System.Drawing.Point(100, 77);
-            this.txtAnguloFinal.Name = "txtAnguloFinal";
-            this.txtAnguloFinal.Size = new System.Drawing.Size(100, 22);
-            this.txtAnguloFinal.TabIndex = 5;
-            // 
             // FrmPie
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(948, 554);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);

@@ -123,8 +123,26 @@
     <EmbeddedResource Include="Views\FrmCross.resx">
       <DependentUpon>FrmCross.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmHeart.resx">
+      <DependentUpon>FrmHeart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmHome.resx">
       <DependentUpon>FrmHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmKite.resx">
+      <DependentUpon>FrmKite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmOctagon.resx">
+      <DependentUpon>FrmOctagon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmPie.resx">
+      <DependentUpon>FrmPie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmRhombus.resx">
+      <DependentUpon>FrmRhombus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmSemicircle.resx">
+      <DependentUpon>FrmSemicircle.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
