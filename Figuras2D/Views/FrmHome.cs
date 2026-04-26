@@ -112,5 +112,12 @@ namespace Figuras2D.Views
             frmPentagon.MdiParent = this;
             frmPentagon.Show();
         }
+
+        private void paralelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmParallelogram frmParallelogram = new FrmParallelogram();
+            frmParallelogram.MdiParent = this;
+            frmParallelogram.Show();
+        }
     }
 }

@@ -43,6 +43,7 @@
             this.rectanguloToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.estrellaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pentagonoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paralelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,10 +74,11 @@
             this.trianguloToolStripMenuItem,
             this.rectanguloToolStripMenuItem,
             this.estrellaToolStripMenuItem,
-            this.pentagonoToolStripMenuItem});
+            this.pentagonoToolStripMenuItem,
+            this.paralelToolStripMenuItem});
             this.msFigurasToolStripMenuItem.Name = "msFigurasToolStripMenuItem";
-            this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.msFigurasToolStripMenuItem.Text = "Figuras";
+            this.msFigurasToolStripMenuItem.Size = new System.Drawing.Size(26, 20);
+            this.msFigurasToolStripMenuItem.Text = "o";
             // 
             // miCruzToolStripMenuItem
             // 
@@ -169,6 +171,13 @@
             this.pentagonoToolStripMenuItem.Text = "Pentagono";
             this.pentagonoToolStripMenuItem.Click += new System.EventHandler(this.pentagonoToolStripMenuItem_Click);
             // 
+            // paralelToolStripMenuItem
+            // 
+            this.paralelToolStripMenuItem.Name = "paralelToolStripMenuItem";
+            this.paralelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.paralelToolStripMenuItem.Text = "Paralelogramo";
+            this.paralelToolStripMenuItem.Click += new System.EventHandler(this.paralelToolStripMenuItem_Click);
+            // 
             // FrmHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -204,5 +213,6 @@
         private System.Windows.Forms.ToolStripMenuItem rectanguloToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem estrellaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pentagonoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem paralelToolStripMenuItem;
     }
 }

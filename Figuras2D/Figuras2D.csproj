@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Parallelogram.cs" />
     <Compile Include="Models\Pentagon.cs" />
     <Compile Include="Models\Star.cs" />
     <Compile Include="Models\Rectangulo.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Models\Semicircle.cs" />
     <Compile Include="Models\Square.cs" />
     <Compile Include="Models\Shapes.cs" />
+    <Compile Include="Presenters\ParallelogramPresenter.cs" />
     <Compile Include="Presenters\PentagonPresenter.cs" />
     <Compile Include="Presenters\StarPresenter.cs" />
     <Compile Include="Presenters\RectanguloPresenter.cs" />
@@ -116,6 +118,12 @@
     </Compile>
     <Compile Include="Views\FrmOctagon.Designer.cs">
       <DependentUpon>FrmOctagon.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmParallelogram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmParallelogram.Designer.cs">
+      <DependentUpon>FrmParallelogram.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmPentagon.cs">
       <SubType>Form</SubType>
