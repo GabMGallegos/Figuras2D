@@ -144,39 +144,146 @@ namespace Figuras2D
             float x = (panel2.ClientSize.Width - ancho) / 2f;
             float y = (panel2.ClientSize.Height - alto) / 2f;
 
-            float mitadAncho = ancho / 2f;
-            float mitadAlto = alto / 2f;
+            float centroX = x + ancho / 2f;
+            float centroY = y + alto / 2f;
 
-            float baseY = y + mitadAlto;
+            // Rombo base
+            PointF puntoSuperior = new PointF(centroX, y);
+            PointF puntoDerecho = new PointF(x + ancho, centroY);
+            PointF puntoInferior = new PointF(centroX, y + alto);
+            PointF puntoIzquierdo = new PointF(x, centroY);
 
-            PointF puntoIzquierdo = new PointF(x, baseY);
-            PointF puntoInferior = new PointF(x + mitadAncho, y + alto);
-            PointF puntoDerecho = new PointF(x + ancho, baseY);
+            PointF[] puntosRombo =
+            {
+                puntoSuperior,
+                puntoDerecho,
+                puntoInferior,
+                puntoIzquierdo
+            };
 
-            RectangleF rectIzquierdo = new RectangleF(x, y + alto / 4f, mitadAncho, alto / 2f);
-            RectangleF rectDerecho = new RectangleF(x + mitadAncho, y + alto / 4f, mitadAncho, alto / 2f);
+            // Longitud de los lados superiores del rombo
+            float ladoSuperiorIzquierdo = Distance(puntoSuperior, puntoIzquierdo);
+            float ladoSuperiorDerecho = Distance(puntoSuperior, puntoDerecho);
 
-            using (GraphicsPath path = new GraphicsPath())
+            float ejeMayor = Math.Min(ladoSuperiorIzquierdo, ladoSuperiorDerecho);
+
+            // Relación para círculo / óvalo
+            float proporcion = alto / ancho;
+            float ejeMenor = ejeMayor * proporcion;
+
+            // Límites para que no quede exagerado
+            if (ejeMenor < ejeMayor * 0.45f)
+            {
+                ejeMenor = ejeMayor * 0.45f;
+            }
+
+            if (ejeMenor > ejeMayor)
+            {
+                ejeMenor = ejeMayor;
+            }
+
+            // Centros de los lóbulos
+            PointF centroElipseIzquierda = MidPoint(puntoSuperior, puntoIzquierdo);
+            PointF centroElipseDerecha = MidPoint(puntoSuperior, puntoDerecho);
+
+            // Ángulos de inclinación
+            float anguloIzquierdo = AngleDegrees(puntoIzquierdo, puntoSuperior);
+            float anguloDerecho = AngleDegrees(puntoSuperior, puntoDerecho);
+
             using (SolidBrush brush = new SolidBrush(Color.Red))
             using (Pen pen = new Pen(Color.Black, 2))
             {
-                path.StartFigure();
+                // Relleno
+                graphics.FillPolygon(brush, puntosRombo);
+                FillRotatedEllipse(graphics, brush, centroElipseIzquierda, ejeMayor, ejeMenor, anguloIzquierdo);
+                FillRotatedEllipse(graphics, brush, centroElipseDerecha, ejeMayor, ejeMenor, anguloDerecho);
 
-                // Triángulo inferior
-                path.AddLine(puntoIzquierdo, puntoInferior);
-                path.AddLine(puntoInferior, puntoDerecho);
+                // SOLO contorno visible:
+                // 1) La V inferior
+                graphics.DrawLine(pen, puntoIzquierdo, puntoInferior);
+                graphics.DrawLine(pen, puntoInferior, puntoDerecho);
 
-                // Semicírculo / semielipse superior derecha
-                path.AddArc(rectDerecho, 0, -180);
-
-                // Semicírculo / semielipse superior izquierda
-                path.AddArc(rectIzquierdo, 0, -180);
-
-                path.CloseFigure();
-
-                graphics.FillPath(brush, path);
-                graphics.DrawPath(pen, path);
+                // 2) SOLO mitad superior de cada lóbulo
+                DrawUpperHalfRotatedEllipse(graphics, pen, centroElipseIzquierda, ejeMayor, ejeMenor, anguloIzquierdo);
+                DrawUpperHalfRotatedEllipse(graphics, pen, centroElipseDerecha, ejeMayor, ejeMenor, anguloDerecho);
             }
+        }
+
+        private void DrawUpperHalfRotatedEllipse(Graphics graphics, Pen pen, PointF centro, float ejeMayor, float ejeMenor, float angulo)
+        {
+            GraphicsState estado = graphics.Save();
+
+            graphics.TranslateTransform(centro.X, centro.Y);
+            graphics.RotateTransform(angulo);
+
+            // Solo la mitad superior
+            graphics.DrawArc(
+                pen,
+                -ejeMayor / 2f,
+                -ejeMenor / 2f,
+                ejeMayor,
+                ejeMenor,
+                180,
+                180
+            );
+
+            graphics.Restore(estado);
+        }
+
+        private float Distance(PointF p1, PointF p2)
+        {
+            float dx = p2.X - p1.X;
+            float dy = p2.Y - p1.Y;
+            return (float)Math.Sqrt(dx * dx + dy * dy);
+        }
+
+        private PointF MidPoint(PointF p1, PointF p2)
+        {
+            return new PointF(
+                (p1.X + p2.X) / 2f,
+                (p1.Y + p2.Y) / 2f
+            );
+        }
+
+        private float AngleDegrees(PointF p1, PointF p2)
+        {
+            float dx = p2.X - p1.X;
+            float dy = p2.Y - p1.Y;
+            return (float)(Math.Atan2(dy, dx) * 180.0 / Math.PI);
+        }
+
+        private void FillRotatedEllipse(Graphics graphics, Brush brush, PointF centro, float ejeMayor, float ejeMenor, float angulo)
+        {
+            GraphicsState estado = graphics.Save();
+
+            graphics.TranslateTransform(centro.X, centro.Y);
+            graphics.RotateTransform(angulo);
+            graphics.FillEllipse(
+                brush,
+                -ejeMayor / 2f,
+                -ejeMenor / 2f,
+                ejeMayor,
+                ejeMenor
+            );
+
+            graphics.Restore(estado);
+        }
+
+        private void DrawRotatedEllipse(Graphics graphics, Pen pen, PointF centro, float ejeMayor, float ejeMenor, float angulo)
+        {
+            GraphicsState estado = graphics.Save();
+
+            graphics.TranslateTransform(centro.X, centro.Y);
+            graphics.RotateTransform(angulo);
+            graphics.DrawEllipse(
+                pen,
+                -ejeMayor / 2f,
+                -ejeMenor / 2f,
+                ejeMayor,
+                ejeMenor
+            );
+
+            graphics.Restore(estado);
         }
     }
 }
