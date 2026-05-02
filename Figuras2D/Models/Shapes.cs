@@ -1,9 +1,12 @@
-﻿namespace Figuras2D.Models
+﻿using System.Drawing;
+
+namespace Figuras2D.Models
 {
     public abstract class Shapes
     {
         public abstract double CalculateArea();
         public abstract double CalculatePerimeter();
         public abstract bool IsValid();
+
     }
 }

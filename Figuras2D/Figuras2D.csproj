@@ -46,11 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Clover.cs" />
+    <Compile Include="Models\CrescentMoon.cs" />
+    <Compile Include="Models\Hexagon.cs" />
     <Compile Include="Models\Parallelogram.cs" />
     <Compile Include="Models\Pentagon.cs" />
+    <Compile Include="Models\ScaleneTriangle.cs" />
     <Compile Include="Models\Star.cs" />
     <Compile Include="Models\Rectangulo.cs" />
     <Compile Include="Models\Circle.cs" />
+    <Compile Include="Models\Trapezoid.cs" />
     <Compile Include="Models\Triangle.cs" />
     <Compile Include="Models\Cross.cs" />
     <Compile Include="Models\Heart.cs" />
@@ -61,10 +66,15 @@
     <Compile Include="Models\Semicircle.cs" />
     <Compile Include="Models\Square.cs" />
     <Compile Include="Models\Shapes.cs" />
+    <Compile Include="Presenters\CloverPresenter.cs" />
+    <Compile Include="Presenters\CrescentMoonPresenter.cs" />
+    <Compile Include="Presenters\HexagonPresenter.cs" />
     <Compile Include="Presenters\ParallelogramPresenter.cs" />
     <Compile Include="Presenters\PentagonPresenter.cs" />
+    <Compile Include="Presenters\ScaleneTrianglePresenter.cs" />
     <Compile Include="Presenters\StarPresenter.cs" />
     <Compile Include="Presenters\RectanguloPresenter.cs" />
+    <Compile Include="Presenters\TrapezoidPresenter.cs" />
     <Compile Include="Presenters\TrianglePresenter.cs" />
     <Compile Include="Presenters\CirclePresenter.cs" />
     <Compile Include="Presenters\SquarePresenter.cs" />

@@ -39,12 +39,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtLado = new System.Windows.Forms.TextBox();
             this.lblLado = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.PanelDibujo = new System.Windows.Forms.Panel();
             this.lblMensaje = new System.Windows.Forms.Label();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.PanelDibujo.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel4
@@ -134,6 +134,7 @@
             this.txtLado.Name = "txtLado";
             this.txtLado.Size = new System.Drawing.Size(100, 22);
             this.txtLado.TabIndex = 1;
+            this.txtLado.TextChanged += new System.EventHandler(this.txtLado_TextChanged);
             // 
             // lblLado
             // 
@@ -144,16 +145,16 @@
             this.lblLado.TabIndex = 0;
             this.lblLado.Text = "Lado:";
             // 
-            // panel2
+            // PanelDibujo
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.lblMensaje);
-            this.panel2.Location = new System.Drawing.Point(365, 54);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(390, 390);
-            this.panel2.TabIndex = 13;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            this.PanelDibujo.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.PanelDibujo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PanelDibujo.Controls.Add(this.lblMensaje);
+            this.PanelDibujo.Location = new System.Drawing.Point(365, 54);
+            this.PanelDibujo.Name = "PanelDibujo";
+            this.PanelDibujo.Size = new System.Drawing.Size(390, 390);
+            this.PanelDibujo.TabIndex = 13;
+            this.PanelDibujo.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // lblMensaje
             // 
@@ -172,7 +173,7 @@
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.PanelDibujo);
             this.Name = "FrmOctagon";
             this.Text = "FrmOctagon";
             this.panel4.ResumeLayout(false);
@@ -180,8 +181,8 @@
             this.panel3.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.PanelDibujo.ResumeLayout(false);
+            this.PanelDibujo.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -199,7 +200,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox txtLado;
         private System.Windows.Forms.Label lblLado;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel PanelDibujo;
         private System.Windows.Forms.Label lblMensaje;
     }
 }

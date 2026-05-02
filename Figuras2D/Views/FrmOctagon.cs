@@ -19,11 +19,11 @@ namespace Figuras2D
         {
             InitializeComponent();
 
-            panel2.Size = new Size(390, 390);
+            PanelDibujo.Size = new Size(390, 390);
 
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
-            panel2.Paint += panel2_Paint;
+            PanelDibujo.Paint += panel2_Paint;
         }
 
         private bool TryGetDouble(TextBox textBox, out double value)
@@ -34,7 +34,7 @@ namespace Figuras2D
 
         private float GetMaxRenderableDiameter()
         {
-            return Math.Min(panel2.ClientSize.Width, panel2.ClientSize.Height) - (2 * Margin);
+            return Math.Min(PanelDibujo.ClientSize.Width, PanelDibujo.ClientSize.Height) - (2 * Margin);
         }
 
         private double GetMaxRenderableSide()
@@ -53,7 +53,7 @@ namespace Figuras2D
                 lblPerimetroResultado.Text = "0.00";
 
                 _octagonActual = null;
-                panel2.Invalidate();
+                PanelDibujo.Invalidate();
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace Figuras2D
                 lblPerimetroResultado.Text = "0.00";
 
                 _octagonActual = null;
-                panel2.Invalidate();
+                PanelDibujo.Invalidate();
                 return;
             }
 
@@ -80,7 +80,7 @@ namespace Figuras2D
                 lblPerimetroResultado.Text = presenter.Perimeter.ToString("0.00");
 
                 _octagonActual = null;
-                panel2.Invalidate();
+                PanelDibujo.Invalidate();
                 return;
             }
 
@@ -91,7 +91,7 @@ namespace Figuras2D
                 lblPerimetroResultado.Text = presenter.Perimeter.ToString("0.00");
 
                 _octagonActual = null;
-                panel2.Invalidate();
+                PanelDibujo.Invalidate();
                 return;
             }
 
@@ -101,7 +101,7 @@ namespace Figuras2D
             lblPerimetroResultado.Text = presenter.Perimeter.ToString("0.00");
             lblMensaje.Text = "";
 
-            panel2.Invalidate();
+            PanelDibujo.Invalidate();
         }
 
         private void btnLimpiarCampos_Click(object sender, EventArgs e)
@@ -113,7 +113,7 @@ namespace Figuras2D
             lblMensaje.Text = "";
 
             _octagonActual = null;
-            panel2.Invalidate();
+            PanelDibujo.Invalidate();
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -130,8 +130,8 @@ namespace Figuras2D
 
             float radio = lado / (2f * (float)Math.Sin(Math.PI / 8));
 
-            float centerX = panel2.ClientSize.Width / 2f;
-            float centerY = panel2.ClientSize.Height / 2f;
+            float centerX = PanelDibujo.ClientSize.Width / 2f;
+            float centerY = PanelDibujo.ClientSize.Height / 2f;
 
             PointF[] puntos = new PointF[8];
 
@@ -151,6 +151,11 @@ namespace Figuras2D
                 graphics.FillPolygon(brush, puntos);
                 graphics.DrawPolygon(pen, puntos);
             }
+        }
+
+        private void txtLado_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
