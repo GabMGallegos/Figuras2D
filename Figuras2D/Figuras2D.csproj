@@ -99,6 +99,18 @@
     <Compile Include="Views\FmrSquare.Designer.cs">
       <DependentUpon>FmrSquare.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrmClover.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmClover.Designer.cs">
+      <DependentUpon>FrmClover.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmCrescentMoon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmCrescentMoon.Designer.cs">
+      <DependentUpon>FrmCrescentMoon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmCross.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +122,12 @@
     </Compile>
     <Compile Include="Views\FrmHeart.Designer.cs">
       <DependentUpon>FrmHeart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmHexagon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmHexagon.Designer.cs">
+      <DependentUpon>FrmHexagon.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmHome.cs">
       <SubType>Form</SubType>
@@ -159,6 +177,12 @@
     <Compile Include="Views\FrmRhombus.Designer.cs">
       <DependentUpon>FrmRhombus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrmScalenTriangle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmScalenTriangle.Designer.cs">
+      <DependentUpon>FrmScalenTriangle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FrmSemicircle.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +194,12 @@
     </Compile>
     <Compile Include="Views\FrmStar.Designer.cs">
       <DependentUpon>FrmStar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmTrapezoid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmTrapezoid.Designer.cs">
+      <DependentUpon>FrmTrapezoid.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmTriangle.cs">
       <SubType>Form</SubType>
@@ -192,11 +222,20 @@
     <EmbeddedResource Include="Views\FmrSquare.resx">
       <DependentUpon>FmrSquare.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmClover.resx">
+      <DependentUpon>FrmClover.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmCrescentMoon.resx">
+      <DependentUpon>FrmCrescentMoon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmCross.resx">
       <DependentUpon>FrmCross.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmHeart.resx">
       <DependentUpon>FrmHeart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmHexagon.resx">
+      <DependentUpon>FrmHexagon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmHome.resx">
       <DependentUpon>FrmHome.cs</DependentUpon>
@@ -213,8 +252,14 @@
     <EmbeddedResource Include="Views\FrmRhombus.resx">
       <DependentUpon>FrmRhombus.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmScalenTriangle.resx">
+      <DependentUpon>FrmScalenTriangle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmSemicircle.resx">
       <DependentUpon>FrmSemicircle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmTrapezoid.resx">
+      <DependentUpon>FrmTrapezoid.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

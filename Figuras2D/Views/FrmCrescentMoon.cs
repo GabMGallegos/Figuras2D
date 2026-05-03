@@ -1,0 +1,146 @@
+﻿using Figuras2D.Models;
+using Figuras2D.Presenters;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Figuras2D.Views
+{
+    public partial class FrmCrescentMoon : Form
+    {
+        private CrescentMoon _figuraActual;
+        private const float Margin = 20f;
+
+        public FrmCrescentMoon()
+        {
+            InitializeComponent();
+
+            btnCalcular.Click += btnCalcular_Click;
+            btnLimpiar.Click += btnLimpiar_Click;
+            panel1.Paint += panelLuna_Paint;
+
+            txtRadio.TextChanged += (s, e) => LimpiarResultados();
+        }
+
+        private bool TryGetDouble(TextBox textBox, out double value)
+        {
+            return double.TryParse(textBox.Text,
+                       NumberStyles.Float, CultureInfo.CurrentCulture, out value)
+                || double.TryParse(textBox.Text,
+                       NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+        }
+
+        private void LimpiarResultados()
+        {
+            lblAreaResult.Text = "0.00";
+            lblPerimetroResult.Text = "0.00";
+            lblMensaje.Text = "";
+            _figuraActual = null;
+            panel1.Invalidate();
+        }
+
+        private void btnCalcular_Click(object sender, EventArgs e)
+        {
+            if (!TryGetDouble(txtRadio, out double radio))
+            {
+                lblMensaje.Text = "Ingrese un valor numérico válido para el radio.";
+                LimpiarResultados();
+                return;
+            }
+
+            var moon = new CrescentMoon(radio);
+            var presenter = new CrescentMoonPresenter(moon);
+
+            if (!presenter.IsValid)
+            {
+                lblMensaje.Text = "El radio debe ser mayor a 0.";
+                LimpiarResultados();
+                return;
+            }
+
+            _figuraActual = moon;
+            lblAreaResult.Text = presenter.Area.ToString("0.00");
+            lblPerimetroResult.Text = presenter.Perimeter.ToString("0.00");
+            lblMensaje.Text = "";
+
+            panel1.Invalidate();
+        }
+
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarResultados();
+        }
+
+
+        private void panelLuna_Paint(object sender, PaintEventArgs e)
+        {
+            if (_figuraActual == null)
+                return;
+
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.Clear(panel1.BackColor);
+
+            float cx = panel1.ClientSize.Width / 2f;
+            float cy = panel1.ClientSize.Height / 2f;
+
+            
+            float R = Math.Min(cx, cy) - Margin;
+
+            
+            float r = R * 0.75f;   // radio del círculo interior
+            float d = R * 0.35f;   // desplazamiento hacia la derecha
+
+            
+            var outerRect = new RectangleF(cx - R, cy - R, 2 * R, 2 * R);
+
+            
+            var innerRect = new RectangleF(cx - r + d, cy - r, 2 * r, 2 * r);
+
+            using (var outerPath = new GraphicsPath())
+            using (var innerPath = new GraphicsPath())
+            {
+                outerPath.AddEllipse(outerRect);
+                innerPath.AddEllipse(innerRect);
+
+                
+                var region = new Region(outerPath);
+                region.Exclude(innerPath);
+
+                using (var brush = new SolidBrush(Color.FromArgb(210, 255, 248, 180)))
+                using (var penOuter = new Pen(Color.Goldenrod, 2))
+                using (var penInner = new Pen(Color.Goldenrod, 2))
+                {
+                    
+                    g.FillRegion(brush, region);
+
+                    g.DrawEllipse(penOuter, outerRect);
+                    g.DrawEllipse(penInner, innerRect);
+                }
+
+                region.Dispose();
+            }
+
+           
+            using (var font = new Font("Segoe UI", 8f, FontStyle.Regular))
+            using (var brush = new SolidBrush(Color.FromArgb(80, 80, 80)))
+            {
+                string texto = $"Radio: {_figuraActual.Radius:0.00}";
+                SizeF sz = g.MeasureString(texto, font);
+                
+                g.DrawString(texto, font, brush,
+                    cx - sz.Width / 2f,
+                    panel1.ClientSize.Height - Margin - sz.Height);
+            }
+        }
+    }
+}
