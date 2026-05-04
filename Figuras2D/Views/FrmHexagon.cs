@@ -17,7 +17,7 @@ namespace Figuras2D.Views
     public partial class FrmHexagon : Form
     {
         private Hexagon _figuraActual;
-        private const float Margin = 20f;
+        private const float margin = 20f;
 
         public FrmHexagon()
         {
@@ -101,8 +101,10 @@ namespace Figuras2D.Views
             float cx = panel1.ClientSize.Width / 2f;
             float cy = panel1.ClientSize.Height / 2f;
 
-            float r = Math.Min(cx, cy) - Margin;
+            float r = Math.Min(cx, cy) - margin;
 
+            // Calcular los 6 vértices del hexágono
+            // El ángulo de cada vértice es 60 grados, empezando desde -30 para que el primer vértice quede "arriba"
             PointF[] puntos = new PointF[6];
             for (int i = 0; i < 6; i++)
             {
@@ -118,37 +120,9 @@ namespace Figuras2D.Views
                 g.FillPolygon(brush, puntos);
                 g.DrawPolygon(pen, puntos);
             }
-
-            DibujarEtiquetaLado(g, puntos[0], puntos[1],
-                _figuraActual.Side, "Lado");
         }
 
 
-        private void DibujarEtiquetaLado(
-            Graphics g, PointF p1, PointF p2, double valor, string nombre)
-        {
-            float mx = (p1.X + p2.X) / 2f;
-            float my = (p1.Y + p2.Y) / 2f;
-
-            float dx = p2.X - p1.X;
-            float dy = p2.Y - p1.Y;
-            float len = (float)Math.Sqrt(dx * dx + dy * dy);
-            if (len < 0.001f) return;
-
-            float nx = -dy / len * 14f;
-            float ny = dx / len * 14f;
-
-            string texto = $"{nombre}: {valor:0.00}";
-
-            using (var font = new Font("Segoe UI", 8f, FontStyle.Regular))
-            using (var brush = new SolidBrush(Color.FromArgb(60, 60, 60)))
-            {
-                SizeF sz = g.MeasureString(texto, font);
-                g.DrawString(texto, font, brush,
-                    mx + nx - sz.Width / 2f,
-                    my + ny - sz.Height / 2f);
-            }
-        }
 
 
     }

@@ -34,8 +34,8 @@ namespace Figuras2D.Views
             this.Font = AppTheme.FontMenu;
             this.btnCalcular.BackColor = AppTheme.Accent;
             this.btnCalcular.ForeColor = AppTheme.TextPri;
-            //this.btnLimpiarCampos.BackColor = AppTheme.Accent;
-            //this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.btnLimpiar.BackColor = AppTheme.Accent;
+            this.btnLimpiar.ForeColor = AppTheme.TextPri;
             this.lblMensaje.ForeColor = AppTheme.alert;
         }
 
@@ -139,17 +139,6 @@ namespace Figuras2D.Views
                 region.Dispose();
             }
 
-           
-            using (var font = new Font("Segoe UI", 8f, FontStyle.Regular))
-            using (var brush = new SolidBrush(Color.FromArgb(80, 80, 80)))
-            {
-                string texto = $"Radio: {_figuraActual.Radius:0.00}";
-                SizeF sz = g.MeasureString(texto, font);
-                
-                g.DrawString(texto, font, brush,
-                    cx - sz.Width / 2f,
-                    panel1.ClientSize.Height - margin - sz.Height);
-            }
         }
     }
 }

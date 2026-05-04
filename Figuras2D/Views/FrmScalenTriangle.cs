@@ -23,18 +23,19 @@ namespace Figuras2D.Views
             InitializeComponent();
 
             btnCalcular.Click += btnCalcular_Click;
-            btnSalir.Click += btnSalir_Click;
+            btnLimpiar.Click += btnLimpiar_Click;
             txtLado1.TextChanged += (s,e) => LimpiarResultados();
             txtLado2.TextChanged += (s,e) => LimpiarResultados();
             txtLado3.TextChanged += (s,e) => LimpiarResultados();
             panel1.Paint += panel1_Paint;
+
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
             this.Font = AppTheme.FontMenu;
             this.btnCalcular.BackColor = AppTheme.Accent;
             this.btnCalcular.ForeColor = AppTheme.TextPri;
-            //this.btnLimpiarCampos.BackColor = AppTheme.Accent;
-            //this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.btnLimpiar.BackColor = AppTheme.Accent;
+            this.btnLimpiar.ForeColor = AppTheme.TextPri;
             this.lblMensaje.ForeColor = AppTheme.alert;
         }
         private bool TryGetDouble(TextBox textBox, out double value)
@@ -55,9 +56,13 @@ namespace Figuras2D.Views
 
         }
 
-        private void btnSalir_Click(object sender, EventArgs e)
+        private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            LimpiarResultados();
+            txtLado1.Text = "";
+            txtLado2.Text = "";
+            txtLado3.Text = "";
+
         }
 
 

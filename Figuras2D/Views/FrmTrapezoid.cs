@@ -36,8 +36,8 @@ namespace Figuras2D.Views
             this.Font = AppTheme.FontMenu;
             this.btnCalcular.BackColor = AppTheme.Accent;
             this.btnCalcular.ForeColor = AppTheme.TextPri;
-            //this.btnLimpiarCampos.BackColor = AppTheme.Accent;
-            //this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.btnLimpiar.BackColor = AppTheme.Accent;
+            this.btnLimpiar.ForeColor = AppTheme.TextPri;
             this.lblMensaje.ForeColor = AppTheme.alert;
         }
 
@@ -94,6 +94,9 @@ namespace Figuras2D.Views
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarResultados();
+            txtBaseMayor.Text = "";
+            txtBaseMenor.Text = "";
+            txtAltura.Text = "";
         }
 
 
@@ -115,10 +118,10 @@ namespace Figuras2D.Views
 
             PointF[] puntos = new PointF[]
             {
-                new PointF(0f,                     (float)h),  
-                new PointF((float)bMayor,          (float)h),  
-                new PointF((float)(offset + bMenor), 0f),      
-                new PointF((float)offset,            0f)       
+                new PointF(0f,                     (float)h),  //inferior izquierdo
+                new PointF((float)bMayor,          (float)h),  //inferior derecho
+                new PointF((float)(offset + bMenor), 0f),      //superior derecho
+                new PointF((float)offset,            0f)       //superior izquierdo
             };
 
             EscalarYCentrar(puntos, panel1.ClientSize);

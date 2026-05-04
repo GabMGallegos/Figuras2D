@@ -17,7 +17,7 @@ namespace Figuras2D.Views
     public partial class FrmClover : Form
     {
         private Clover _figuraActual;
-        private const float Margin = 20f;
+        private const float margin = 20f;
 
         public FrmClover()
         {
@@ -34,8 +34,8 @@ namespace Figuras2D.Views
             this.Font = AppTheme.FontMenu;
             this.btnCalcular.BackColor = AppTheme.Accent;
             this.btnCalcular.ForeColor = AppTheme.TextPri;
-            //this.btnLimpiarCampos.BackColor = AppTheme.Accent;
-            //this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.btnLimpiar.BackColor = AppTheme.Accent;
+            this.btnLimpiar.ForeColor = AppTheme.TextPri;
             this.lblMensaje.ForeColor = AppTheme.alert;
         }
 
@@ -52,6 +52,7 @@ namespace Figuras2D.Views
             lblAreaResult.Text = "0.00";
             lblPerimetroResult.Text = "0.00";
             lblMensaje.Text = "";
+
             _figuraActual = null;
             panel1.Invalidate();
         }
@@ -87,6 +88,7 @@ namespace Figuras2D.Views
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarResultados();
+            txtRadio.Text = "";
         }
 
         private void panelTrebol_Paint(object sender, PaintEventArgs e)
@@ -101,13 +103,16 @@ namespace Figuras2D.Views
             float cx = panel1.ClientSize.Width / 2f;
             float cy = panel1.ClientSize.Height / 2f;
 
-            float maxR = Math.Min(cx, cy) - Margin;
+            // El radio máximo para que quepa en el panel considerando el margen
+
+            float maxR = Math.Min(cx, cy) - margin;
             float r = maxR / 2f;
 
             using (var path = new GraphicsPath())
             using (var brush = new SolidBrush(Color.FromArgb(180, 32, 178, 170)))
             using (var pen = new Pen(Color.SeaGreen, 2))
             {
+                //tres hojas separadas 120 grados, cada una es un círculo con radio r
                 for (int i = 0; i < 3; i++)
                 {
                     double angulo = (i * 120 - 90) * Math.PI / 180.0;
@@ -119,16 +124,6 @@ namespace Figuras2D.Views
 
                 g.FillPath(brush, path);
                 g.DrawPath(pen, path);
-            }
-
-            using (var font = new Font("Segoe UI", 8f, FontStyle.Regular))
-            using (var brush = new SolidBrush(Color.FromArgb(60, 60, 60)))
-            {
-                string texto = $"Radio: {_figuraActual.Radius:0.00}";
-                SizeF sz = g.MeasureString(texto, font);
-                g.DrawString(texto, font, brush,
-                    cx - sz.Width / 2f,
-                    cy - sz.Height / 2f);
             }
         }
     }

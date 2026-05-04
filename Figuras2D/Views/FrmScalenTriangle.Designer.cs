@@ -32,7 +32,7 @@
             this.lblLado2 = new System.Windows.Forms.Label();
             this.lblLado3 = new System.Windows.Forms.Label();
             this.btnCalcular = new System.Windows.Forms.Button();
-            this.btnSalir = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.lblArea = new System.Windows.Forms.Label();
             this.lblPerimetro = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -81,15 +81,15 @@
             this.btnCalcular.UseVisualStyleBackColor = true;
             this.btnCalcular.Click += new System.EventHandler(this.btnCalcular_Click);
             // 
-            // btnSalir
+            // btnLimpiar
             // 
-            this.btnSalir.Location = new System.Drawing.Point(141, 188);
-            this.btnSalir.Name = "btnSalir";
-            this.btnSalir.Size = new System.Drawing.Size(75, 23);
-            this.btnSalir.TabIndex = 4;
-            this.btnSalir.Text = "Salir";
-            this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
+            this.btnLimpiar.Location = new System.Drawing.Point(141, 188);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.btnLimpiar.TabIndex = 4;
+            this.btnLimpiar.Text = "limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // lblArea
             // 
@@ -181,7 +181,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblPerimetro);
             this.Controls.Add(this.lblArea);
-            this.Controls.Add(this.btnSalir);
+            this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.btnCalcular);
             this.Controls.Add(this.lblLado3);
             this.Controls.Add(this.lblLado2);
@@ -199,7 +199,7 @@
         private System.Windows.Forms.Label lblLado2;
         private System.Windows.Forms.Label lblLado3;
         private System.Windows.Forms.Button btnCalcular;
-        private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Label lblArea;
         private System.Windows.Forms.Label lblPerimetro;
         private System.Windows.Forms.Panel panel1;
