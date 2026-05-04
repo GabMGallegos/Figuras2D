@@ -15,6 +15,15 @@ namespace Figuras2D.Views
         {
             InitializeComponent();
             this.Resize += FmrSquare_Resize;
+
+            this.BackColor = AppTheme.BgMain;
+            this.ForeColor = AppTheme.TextPri;
+            this.Font = AppTheme.FontMenu;
+            this.btnCalcular.BackColor = AppTheme.Accent;
+            this.btnCalcular.ForeColor = AppTheme.TextPri;
+            this.btnLimpiarCampos.BackColor = AppTheme.Accent;
+            this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.lblMensaje.ForeColor = AppTheme.alert;
         }
 
         private void FmrSquare_Load(object sender, EventArgs e)

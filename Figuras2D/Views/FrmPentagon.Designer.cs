@@ -129,7 +129,7 @@
             this.lblLado.AutoSize = true;
             this.lblLado.Location = new System.Drawing.Point(4, 21);
             this.lblLado.Name = "lblLado";
-            this.lblLado.Size = new System.Drawing.Size(38, 16);
+            this.lblLado.Size = new System.Drawing.Size(41, 16);
             this.lblLado.TabIndex = 0;
             this.lblLado.Text = "Lado:";
             // 
@@ -162,6 +162,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FrmPentagon";
             this.Text = "Pentágono";
             this.panel4.ResumeLayout(false);
@@ -172,6 +173,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion

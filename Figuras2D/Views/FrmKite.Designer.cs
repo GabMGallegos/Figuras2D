@@ -233,6 +233,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "FrmKite";
             this.Text = "FrmKite";
             this.panel4.ResumeLayout(false);

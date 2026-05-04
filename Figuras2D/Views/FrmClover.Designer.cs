@@ -120,6 +120,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel1.Location = new System.Drawing.Point(333, 48);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(386, 354);
@@ -137,7 +138,7 @@
             this.lblRadio.AutoSize = true;
             this.lblRadio.Location = new System.Drawing.Point(85, 120);
             this.lblRadio.Name = "lblRadio";
-            this.lblRadio.Size = new System.Drawing.Size(59, 20);
+            this.lblRadio.Size = new System.Drawing.Size(47, 16);
             this.lblRadio.TabIndex = 12;
             this.lblRadio.Text = "Radio:";
             // 

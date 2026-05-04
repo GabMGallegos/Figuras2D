@@ -17,7 +17,7 @@ namespace Figuras2D.Views
     public partial class FrmCrescentMoon : Form
     {
         private CrescentMoon _figuraActual;
-        private const float Margin = 20f;
+        private const float margin = 20f;
 
         public FrmCrescentMoon()
         {
@@ -28,6 +28,15 @@ namespace Figuras2D.Views
             panel1.Paint += panelLuna_Paint;
 
             txtRadio.TextChanged += (s, e) => LimpiarResultados();
+
+            this.BackColor = AppTheme.BgMain;
+            this.ForeColor = AppTheme.TextPri;
+            this.Font = AppTheme.FontMenu;
+            this.btnCalcular.BackColor = AppTheme.Accent;
+            this.btnCalcular.ForeColor = AppTheme.TextPri;
+            //this.btnLimpiarCampos.BackColor = AppTheme.Accent;
+            //this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.lblMensaje.ForeColor = AppTheme.alert;
         }
 
         private bool TryGetDouble(TextBox textBox, out double value)
@@ -94,7 +103,7 @@ namespace Figuras2D.Views
             float cy = panel1.ClientSize.Height / 2f;
 
             
-            float R = Math.Min(cx, cy) - Margin;
+            float R = Math.Min(cx, cy) - margin;
 
             
             float r = R * 0.75f;   // radio del círculo interior
@@ -139,7 +148,7 @@ namespace Figuras2D.Views
                 
                 g.DrawString(texto, font, brush,
                     cx - sz.Width / 2f,
-                    panel1.ClientSize.Height - Margin - sz.Height);
+                    panel1.ClientSize.Height - margin - sz.Height);
             }
         }
     }

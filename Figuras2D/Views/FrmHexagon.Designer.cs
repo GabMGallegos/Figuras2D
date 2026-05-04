@@ -60,6 +60,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel1.Location = new System.Drawing.Point(329, 53);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(386, 354);
@@ -138,7 +139,7 @@
             this.lblMensaje.AutoSize = true;
             this.lblMensaje.Location = new System.Drawing.Point(93, 355);
             this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(0, 20);
+            this.lblMensaje.Size = new System.Drawing.Size(0, 16);
             this.lblMensaje.TabIndex = 11;
             // 
             // FrmHexagon

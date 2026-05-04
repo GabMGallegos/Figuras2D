@@ -20,6 +20,14 @@ namespace Figuras2D.Views
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panelTriangulo.Paint += panelTriangulo_Paint;
+            this.BackColor = AppTheme.BgMain;
+            this.ForeColor = AppTheme.TextPri;
+            this.Font = AppTheme.FontMenu;
+            this.btnCalcular.BackColor = AppTheme.Accent;
+            this.btnCalcular.ForeColor = AppTheme.TextPri;
+            this.btnLimpiarCampos.BackColor = AppTheme.Accent;
+            this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.lblMensaje.ForeColor = AppTheme.alert;
         }
 
         private bool TryGetDouble(TextBox textBox, out double value)

@@ -28,6 +28,14 @@ namespace Figuras2D.Views
             txtLado2.TextChanged += (s,e) => LimpiarResultados();
             txtLado3.TextChanged += (s,e) => LimpiarResultados();
             panel1.Paint += panel1_Paint;
+            this.BackColor = AppTheme.BgMain;
+            this.ForeColor = AppTheme.TextPri;
+            this.Font = AppTheme.FontMenu;
+            this.btnCalcular.BackColor = AppTheme.Accent;
+            this.btnCalcular.ForeColor = AppTheme.TextPri;
+            //this.btnLimpiarCampos.BackColor = AppTheme.Accent;
+            //this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.lblMensaje.ForeColor = AppTheme.alert;
         }
         private bool TryGetDouble(TextBox textBox, out double value)
         {

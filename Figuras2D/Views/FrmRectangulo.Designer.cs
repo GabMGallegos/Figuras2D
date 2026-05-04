@@ -182,6 +182,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FrmRectangulo";
             this.Text = "Rectángulo";
             this.panel4.ResumeLayout(false);
@@ -192,6 +193,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion

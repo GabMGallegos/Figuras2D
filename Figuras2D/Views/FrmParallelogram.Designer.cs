@@ -137,7 +137,7 @@
             this.lblAngulo.AutoSize = true;
             this.lblAngulo.Location = new System.Drawing.Point(4, 83);
             this.lblAngulo.Name = "lblAngulo";
-            this.lblAngulo.Size = new System.Drawing.Size(70, 16);
+            this.lblAngulo.Size = new System.Drawing.Size(67, 16);
             this.lblAngulo.TabIndex = 4;
             this.lblAngulo.Text = "Ángulo (°):";
             // 
@@ -153,7 +153,7 @@
             this.lblLado.AutoSize = true;
             this.lblLado.Location = new System.Drawing.Point(4, 52);
             this.lblLado.Name = "lblLado";
-            this.lblLado.Size = new System.Drawing.Size(38, 16);
+            this.lblLado.Size = new System.Drawing.Size(41, 16);
             this.lblLado.TabIndex = 2;
             this.lblLado.Text = "Lado:";
             // 
@@ -169,7 +169,7 @@
             this.lblBase.AutoSize = true;
             this.lblBase.Location = new System.Drawing.Point(4, 21);
             this.lblBase.Name = "lblBase";
-            this.lblBase.Size = new System.Drawing.Size(40, 16);
+            this.lblBase.Size = new System.Drawing.Size(42, 16);
             this.lblBase.TabIndex = 0;
             this.lblBase.Text = "Base:";
             // 
@@ -202,6 +202,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FrmParallelogram";
             this.Text = "Paralelogramo";
             this.panel4.ResumeLayout(false);
@@ -212,6 +213,7 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         #endregion

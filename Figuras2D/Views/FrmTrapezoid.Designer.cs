@@ -58,7 +58,7 @@
             this.lblBaseMa.AutoSize = true;
             this.lblBaseMa.Location = new System.Drawing.Point(81, 119);
             this.lblBaseMa.Name = "lblBaseMa";
-            this.lblBaseMa.Size = new System.Drawing.Size(100, 20);
+            this.lblBaseMa.Size = new System.Drawing.Size(80, 16);
             this.lblBaseMa.TabIndex = 1;
             this.lblBaseMa.Text = "Base Mayor";
             // 
@@ -94,6 +94,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel1.Location = new System.Drawing.Point(390, 35);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(440, 419);
@@ -122,7 +123,7 @@
             this.lblArea.AutoSize = true;
             this.lblArea.Location = new System.Drawing.Point(81, 318);
             this.lblArea.Name = "lblArea";
-            this.lblArea.Size = new System.Drawing.Size(45, 20);
+            this.lblArea.Size = new System.Drawing.Size(36, 16);
             this.lblArea.TabIndex = 9;
             this.lblArea.Text = "Area";
             // 
@@ -131,7 +132,7 @@
             this.lblPerimetro.AutoSize = true;
             this.lblPerimetro.Location = new System.Drawing.Point(81, 351);
             this.lblPerimetro.Name = "lblPerimetro";
-            this.lblPerimetro.Size = new System.Drawing.Size(81, 20);
+            this.lblPerimetro.Size = new System.Drawing.Size(65, 16);
             this.lblPerimetro.TabIndex = 10;
             this.lblPerimetro.Text = "Perimetro";
             // 
@@ -140,7 +141,7 @@
             this.lblAreaResult.AutoSize = true;
             this.lblAreaResult.Location = new System.Drawing.Point(137, 318);
             this.lblAreaResult.Name = "lblAreaResult";
-            this.lblAreaResult.Size = new System.Drawing.Size(0, 20);
+            this.lblAreaResult.Size = new System.Drawing.Size(0, 16);
             this.lblAreaResult.TabIndex = 11;
             // 
             // lblPerimetroResult
@@ -148,7 +149,7 @@
             this.lblPerimetroResult.AutoSize = true;
             this.lblPerimetroResult.Location = new System.Drawing.Point(168, 351);
             this.lblPerimetroResult.Name = "lblPerimetroResult";
-            this.lblPerimetroResult.Size = new System.Drawing.Size(0, 20);
+            this.lblPerimetroResult.Size = new System.Drawing.Size(0, 16);
             this.lblPerimetroResult.TabIndex = 12;
             // 
             // lblMensaje
@@ -156,7 +157,7 @@
             this.lblMensaje.AutoSize = true;
             this.lblMensaje.Location = new System.Drawing.Point(70, 422);
             this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(0, 20);
+            this.lblMensaje.Size = new System.Drawing.Size(0, 16);
             this.lblMensaje.TabIndex = 13;
             // 
             // FrmTrapezoid

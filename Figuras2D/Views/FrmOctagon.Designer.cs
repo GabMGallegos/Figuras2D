@@ -174,6 +174,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.PanelDibujo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "FrmOctagon";
             this.Text = "FrmOctagon";
             this.panel4.ResumeLayout(false);

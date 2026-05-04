@@ -30,6 +30,15 @@ namespace Figuras2D.Views
             txtBaseMayor.TextChanged += (s, e) => LimpiarResultados();
             txtBaseMenor.TextChanged += (s, e) => LimpiarResultados();
             txtAltura.TextChanged += (s, e) => LimpiarResultados();
+
+            this.BackColor = AppTheme.BgMain;
+            this.ForeColor = AppTheme.TextPri;
+            this.Font = AppTheme.FontMenu;
+            this.btnCalcular.BackColor = AppTheme.Accent;
+            this.btnCalcular.ForeColor = AppTheme.TextPri;
+            //this.btnLimpiarCampos.BackColor = AppTheme.Accent;
+            //this.btnLimpiarCampos.ForeColor = AppTheme.TextPri;
+            this.lblMensaje.ForeColor = AppTheme.alert;
         }
 
         private bool TryGetDouble(TextBox textBox, out double value)
@@ -49,9 +58,6 @@ namespace Figuras2D.Views
             panel1.Invalidate();
         }
 
-        // ---------------------------------------------------------------
-        // BOTÓN CALCULAR
-        // ---------------------------------------------------------------
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             if (!TryGetDouble(txtBaseMayor, out double bMayor) ||
@@ -124,10 +130,6 @@ namespace Figuras2D.Views
                 g.DrawPolygon(pen, puntos);
             }
 
-
-            DibujarEtiquetaLado(g, puntos[0], puntos[1], bMayor, "Base mayor");
-            DibujarEtiquetaLado(g, puntos[3], puntos[2], bMenor, "Base menor");
-            DibujarEtiquetaLado(g, puntos[0], puntos[3], _figuraActual.LateralSide, "Lado");
         }
 
         private void EscalarYCentrar(PointF[] puntos, Size panelSize)
@@ -153,31 +155,6 @@ namespace Figuras2D.Views
                 puntos[i].Y = (puntos[i].Y - minY) * escala + margin;
             }
         }
-
-        private void DibujarEtiquetaLado(
-            Graphics g, PointF p1, PointF p2, double valor, string nombre)
-        {
-            float mx = (p1.X + p2.X) / 2f;
-            float my = (p1.Y + p2.Y) / 2f;
-
-            float dx = p2.X - p1.X;
-            float dy = p2.Y - p1.Y;
-            float len = (float)Math.Sqrt(dx * dx + dy * dy);
-            if (len < 0.001f) return;
-
-            float nx = -dy / len * 14f;
-            float ny = dx / len * 14f;
-
-            string texto = $"{nombre}: {valor:0.00}";
-
-            using (var font = new Font("Segoe UI", 8f, FontStyle.Regular))
-            using (var brush = new SolidBrush(Color.FromArgb(60, 60, 60)))
-            {
-                SizeF sz = g.MeasureString(texto, font);
-                g.DrawString(texto, font, brush,
-                    mx + nx - sz.Width / 2f,
-                    my + ny - sz.Height / 2f);
-            }
         }
     }
-}
+
