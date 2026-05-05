@@ -19,6 +19,19 @@ namespace Figuras2D.Views
         private Hexagon _figuraActual;
         private const float margin = 20f;
 
+        private const double MinRenderableSide = 20; 
+
+        private float GetMaxRenderableDiameter()
+        {
+            return Math.Min(panel1.ClientSize.Width, panel1.ClientSize.Height) - (2 * margin);
+        }
+
+        private double GetMaxRenderableSide()
+        {
+            float maxDiameter = GetMaxRenderableDiameter();
+            return maxDiameter / 2.0;
+        }
+
         public FrmHexagon()
         {
             InitializeComponent();
@@ -61,7 +74,7 @@ namespace Figuras2D.Views
         {
             if (!TryGetDouble(txtLado, out double lado))
             {
-                lblMensaje.Text = "Ingrese un valor numérico válido para el lado.";
+                lblMensaje.Text = "Ingrese un valor numérico válido.";
                 LimpiarResultados();
                 return;
             }
@@ -76,42 +89,62 @@ namespace Figuras2D.Views
                 return;
             }
 
+            double maxRenderableSide = GetMaxRenderableSide();
+
+
+
+            if (lado < MinRenderableSide)
+            {
+                lblMensaje.Text = $"El hexágono es muy pequeño. Use un lado ≥ {MinRenderableSide:0.00}.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+    
+            if (lado > maxRenderableSide)
+            {
+                lblMensaje.Text = $"El hexágono es muy grande. El lado máximo es {maxRenderableSide:0.00}.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+
             _figuraActual = hexagon;
             lblAreaResult.Text = presenter.Area.ToString("0.00");
             lblPerimetroResult.Text = presenter.Perimeter.ToString("0.00");
             lblMensaje.Text = "";
-
             panel1.Invalidate();
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarResultados();
+            txtLado.Text = "";
         }
 
         private void panelHexagono_Paint(object sender, PaintEventArgs e)
         {
-            if (_figuraActual == null)
-                return;
+            if (_figuraActual == null) return;
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.Clear(panel1.BackColor);
+
+            // Uso lado real para el dibujo, para que se vea proporcional al valor ingresado
+            float lado = (float)_figuraActual.Side;
+
+            float radio = lado;
 
             float cx = panel1.ClientSize.Width / 2f;
             float cy = panel1.ClientSize.Height / 2f;
 
-            float r = Math.Min(cx, cy) - margin;
-
-            // Calcular los 6 vértices del hexágono
-            // El ángulo de cada vértice es 60 grados, empezando desde -30 para que el primer vértice quede "arriba"
             PointF[] puntos = new PointF[6];
             for (int i = 0; i < 6; i++)
             {
+                // Ajustamos el ángulo para que se vea igual que el de tus compañeros
                 double ang = (i * 60 - 30) * Math.PI / 180.0;
                 puntos[i] = new PointF(
-                    cx + r * (float)Math.Cos(ang),
-                    cy + r * (float)Math.Sin(ang));
+                    cx + radio * (float)Math.Cos(ang),
+                    cy + radio * (float)Math.Sin(ang));
             }
 
             using (var brush = new SolidBrush(Color.FromArgb(180, 255, 215, 0)))

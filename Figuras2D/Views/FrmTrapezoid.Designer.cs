@@ -97,7 +97,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel1.Location = new System.Drawing.Point(390, 35);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(440, 419);
+            this.panel1.Size = new System.Drawing.Size(537, 419);
             this.panel1.TabIndex = 6;
             // 
             // btnCalcular
@@ -164,7 +164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(892, 492);
+            this.ClientSize = new System.Drawing.Size(939, 492);
             this.Controls.Add(this.lblMensaje);
             this.Controls.Add(this.lblPerimetroResult);
             this.Controls.Add(this.lblAreaResult);

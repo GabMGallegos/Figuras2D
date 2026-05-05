@@ -19,6 +19,20 @@ namespace Figuras2D.Views
         private CrescentMoon _figuraActual;
         private const float margin = 20f;
 
+        private const double MinRenderableSide = 20;
+
+        private float GetMaxRenderableDiameter()
+        {
+            return Math.Min(panel1.ClientSize.Width, panel1.ClientSize.Height) - (2 * margin);
+        }
+
+        private double GetMaxRenderableSide()
+        {
+            float maxDiameter = GetMaxRenderableDiameter();
+            return maxDiameter / 2.0;
+        }
+
+
         public FrmCrescentMoon()
         {
             InitializeComponent();
@@ -75,6 +89,24 @@ namespace Figuras2D.Views
                 return;
             }
 
+            double maxRenderableSide = GetMaxRenderableSide();
+
+            if (radio < MinRenderableSide)
+            {
+                lblMensaje.Text = $"La media luna es muy pequeña. Use un radio ≥ {MinRenderableSide:0.00}.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+
+            if (radio > maxRenderableSide)
+            {
+                lblMensaje.Text = $"La media luna es muy grande. El radio máximo es {maxRenderableSide:0.00}.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+
             _figuraActual = moon;
             lblAreaResult.Text = presenter.Area.ToString("0.00");
             lblPerimetroResult.Text = presenter.Perimeter.ToString("0.00");
@@ -103,7 +135,7 @@ namespace Figuras2D.Views
             float cy = panel1.ClientSize.Height / 2f;
 
             
-            float R = Math.Min(cx, cy) - margin;
+            float R =(float)_figuraActual.Radius;
 
             
             float r = R * 0.75f;   // radio del círculo interior
@@ -111,7 +143,6 @@ namespace Figuras2D.Views
 
             
             var outerRect = new RectangleF(cx - R, cy - R, 2 * R, 2 * R);
-
             
             var innerRect = new RectangleF(cx - r + d, cy - r, 2 * r, 2 * r);
 
@@ -126,14 +157,9 @@ namespace Figuras2D.Views
                 region.Exclude(innerPath);
 
                 using (var brush = new SolidBrush(Color.FromArgb(210, 255, 248, 180)))
-                using (var penOuter = new Pen(Color.Goldenrod, 2))
-                using (var penInner = new Pen(Color.Goldenrod, 2))
                 {
                     
                     g.FillRegion(brush, region);
-
-                    g.DrawEllipse(penOuter, outerRect);
-                    g.DrawEllipse(penInner, innerRect);
                 }
 
                 region.Dispose();

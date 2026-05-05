@@ -18,6 +18,17 @@ namespace Figuras2D.Views
     {
         private Clover _figuraActual;
         private const float margin = 20f;
+        private const double MinRenderableSide = 20;
+
+        private float GetMaxRenderableDiameter()
+        {
+            return Math.Min(panel1.ClientSize.Width, panel1.ClientSize.Height) - (2 * margin);
+        }
+        private double GetMaxRenderableSide()
+        {
+            float maxDiameter = GetMaxRenderableDiameter();
+            return maxDiameter / 2.0;
+        }
 
         public FrmClover()
         {
@@ -76,6 +87,24 @@ namespace Figuras2D.Views
                 return;
             }
 
+            double maxRenderableSide = GetMaxRenderableSide();
+
+            if (radio < MinRenderableSide)
+            {
+                lblMensaje.Text = $"El trebol es muy pequeño. Use un radio ≥ {MinRenderableSide:0.00}.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+
+            if (radio > maxRenderableSide)
+            {
+                lblMensaje.Text = $"El trebol es muy grande. El radio máximo es {maxRenderableSide:0.00}.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+
             _figuraActual = clover;
             lblAreaResult.Text = presenter.Area.ToString("0.00");
             lblPerimetroResult.Text = presenter.Perimeter.ToString("0.00");
@@ -104,9 +133,7 @@ namespace Figuras2D.Views
             float cy = panel1.ClientSize.Height / 2f;
 
             // El radio máximo para que quepa en el panel considerando el margen
-
-            float maxR = Math.Min(cx, cy) - margin;
-            float r = maxR / 2f;
+            float r = (float) _figuraActual.Radius;
 
             using (var path = new GraphicsPath())
             using (var brush = new SolidBrush(Color.FromArgb(180, 32, 178, 170)))

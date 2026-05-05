@@ -18,6 +18,17 @@ namespace Figuras2D.Views
     {
         private ScaleneTriangle _figuraActual;
         private const float margin = 20f;
+
+        private float GetMaxRenderableDiameter()
+        {
+            return Math.Min(panel1.ClientSize.Width, panel1.ClientSize.Height) - (2 * margin);
+        }
+
+        private double GetMaxRenderableSide()
+        {
+            float maxDiameter = GetMaxRenderableDiameter();
+            return maxDiameter / 2.0;
+        }
         public FrmScalenTriangle()
         {
             InitializeComponent();
@@ -123,32 +134,13 @@ namespace Figuras2D.Views
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.Clear(panel1.BackColor);
 
+            float escala = 5f;
             // Calcular los 3 vértices a partir de los lados (ley de cosenos)
-            PointF[] puntos = CalcularVertices(
-                _figuraActual.SideA,
-                _figuraActual.SideB,
-                _figuraActual.SideC);
 
-            // Escalar y centrar para que ocupe el panel
-            EscalarYCentrar(puntos, panel1.ClientSize);
+            double a = _figuraActual.SideA * escala;
+            double b = _figuraActual.SideB * escala;
+            double c = _figuraActual.SideC * escala;
 
-            // Dibujar
-            using (var brush = new SolidBrush(Color.FromArgb(180, 173, 216, 230)))
-            using (var pen = new Pen(Color.SteelBlue, 2))
-            {
-                g.FillPolygon(brush, puntos);
-                g.DrawPolygon(pen, puntos);
-            }
-
-            // Etiquetas de cada lado
-            DibujarEtiquetaLado(g, puntos[0], puntos[1], _figuraActual.SideC, "c");
-            DibujarEtiquetaLado(g, puntos[0], puntos[2], _figuraActual.SideB, "b");
-            DibujarEtiquetaLado(g, puntos[1], puntos[2], _figuraActual.SideA, "a");
-        }
-
-        private PointF[] CalcularVertices(double a, double b, double c)
-        {
-            // Ángulo en el vértice P0 (opuesto a lado a)
             double cosA = (b * b + c * c - a * a) / (2 * b * c);
             double angA = Math.Acos(cosA);
 
@@ -159,60 +151,28 @@ namespace Figuras2D.Views
                 (float)(b * Math.Cos(angA)),
                 (float)(-b * Math.Sin(angA)));   // Y negativo → arriba en pantalla
 
-            return p;
-        }
+            float offsetX = panel1.ClientSize.Width / 2f - (float)_figuraActual.SideC / 2f;
+            float offsetY = panel1.ClientSize.Height / 2f + (float)(_figuraActual.SideB * Math.Sin(angA)) / 2f;
 
-        private void EscalarYCentrar(PointF[] puntos, Size panelSize)
-        {
-            float minX = float.MaxValue, maxX = float.MinValue;
-            float minY = float.MaxValue, maxY = float.MinValue;
-
-            foreach (var p in puntos)
+            for (int i = 0; i < p.Length; i++)
             {
-                if (p.X < minX) minX = p.X;
-                if (p.X > maxX) maxX = p.X;
-                if (p.Y < minY) minY = p.Y;
-                if (p.Y > maxY) maxY = p.Y;
+                p[i].X += offsetX;
+                p[i].Y += offsetY;
             }
 
-            float anchoFig = maxX - minX;
-            float altoFig = maxY - minY;
-
-            float escalaX = (panelSize.Width - 2 * margin) / anchoFig;
-            float escalaY = (panelSize.Height - 2 * margin) / altoFig;
-            float escala = Math.Min(escalaX, escalaY);
-
-            for (int i = 0; i < puntos.Length; i++)
+            using (var brush = new SolidBrush(Color.FromArgb(180, 173, 216, 230)))
+            using (var pen = new Pen(Color.SteelBlue, 2))
             {
-                puntos[i].X = (puntos[i].X - minX) * escala + margin;
-                puntos[i].Y = (puntos[i].Y - minY) * escala + margin;
+                g.FillPolygon(brush, p);
+                g.DrawPolygon(pen, p);
             }
-        }
 
-        private void DibujarEtiquetaLado(
-            Graphics g, PointF p1, PointF p2, double valor, string nombre)
-        {
-            float mx = (p1.X + p2.X) / 2f;
-            float my = (p1.Y + p2.Y) / 2f;
-
-            // Desplazar 14px en dirección perpendicular al lado
-            float dx = p2.X - p1.X;
-            float dy = p2.Y - p1.Y;
-            float len = (float)Math.Sqrt(dx * dx + dy * dy);
-            if (len < 0.001f) return;
-
-            float nx = -dy / len * 14f;   // normal unitaria × 14px
-            float ny = dx / len * 14f;
-
-            string texto = $"{nombre} = {valor:0.00}";
-
-            using (var font = new Font("Segoe UI", 8f, FontStyle.Regular))
-            using (var brush = new SolidBrush(Color.FromArgb(60, 60, 60)))
+            // Dibujar
+            using (var brush = new SolidBrush(Color.FromArgb(180, 173, 216, 230)))
+            using (var pen = new Pen(Color.SteelBlue, 2))
             {
-                SizeF sz = g.MeasureString(texto, font);
-                g.DrawString(texto, font, brush,
-                    mx + nx - sz.Width / 2f,
-                    my + ny - sz.Height / 2f);
+                g.FillPolygon(brush, p);
+                g.DrawPolygon(pen, p);
             }
         }
 

@@ -19,6 +19,19 @@ namespace Figuras2D.Views
         private Trapezoid _figuraActual;
         private const float margin = 20f;
 
+        private const double MinRenderableSide = 20;
+
+        private float GetMaxRenderableDiameter()
+        {
+            return Math.Min(panel1.ClientSize.Width, panel1.ClientSize.Height) - (2 * margin);
+        }
+        private double GetMaxRenderableSide() 
+        {
+            return GetMaxRenderableDiameter();
+           
+        }
+
+
         public FrmTrapezoid()
         {
             InitializeComponent();
@@ -58,6 +71,11 @@ namespace Figuras2D.Views
             panel1.Invalidate();
         }
 
+        private Trapezoid Get_figuraActual1()
+        {
+            return _figuraActual;
+        }
+
         private void btnCalcular_Click(object sender, EventArgs e)
         {
             if (!TryGetDouble(txtBaseMayor, out double bMayor) ||
@@ -82,7 +100,32 @@ namespace Figuras2D.Views
                 return;
             }
 
-            _figuraActual = trapezoid;
+            double maxRenderableSide = GetMaxRenderableSide();
+
+            if(bMayor==bMenor)
+            {
+                lblMensaje.Text = $"El trapecio es en realidad un rectángulo.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+
+            if (bMayor< MinRenderableSide)
+            {
+                lblMensaje.Text = $"El trapecio es muy pequeño. Use un lado ≥ {MinRenderableSide:0.00}.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+
+            if (bMayor > maxRenderableSide)
+            {
+                lblMensaje.Text = $"El trapecio es muy grande. El lado máximo es {maxRenderableSide:0.00}.";
+                _figuraActual = null;
+                panel1.Invalidate();
+                return;
+            }
+             _figuraActual = trapezoid;
             lblAreaResult.Text = presenter.Area.ToString("0.00");
             lblPerimetroResult.Text = presenter.Perimeter.ToString("0.00");
             lblMensaje.Text = "";
@@ -110,52 +153,28 @@ namespace Figuras2D.Views
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.Clear(panel1.BackColor);
 
-            double bMayor = _figuraActual.MajorBase;
-            double bMenor = _figuraActual.MinorBase;
-            double h = _figuraActual.Height;
+            float escala =5f;
+            float bMayor = (float)_figuraActual.MajorBase * escala;
+            float bMenor = (float)_figuraActual.MinorBase * escala;
+            float h = (float)_figuraActual.Height * escala;
+            float offset = (bMayor - bMenor) / 2f;
 
-            double offset = (bMayor - bMenor) / 2.0;
+            float cx = panel1.ClientSize.Width / 2f;
+            float cy = panel1.ClientSize.Height / 2f;
 
             PointF[] puntos = new PointF[]
             {
-                new PointF(0f,                     (float)h),  //inferior izquierdo
-                new PointF((float)bMayor,          (float)h),  //inferior derecho
-                new PointF((float)(offset + bMenor), 0f),      //superior derecho
-                new PointF((float)offset,            0f)       //superior izquierdo
+                new PointF(cx-bMayor,cy+h/2f),  //inferior izquierdo
+                new PointF(cx+bMayor,cy+h/2f),  //inferior derecho
+                new PointF(cx+bMenor, cy-h/2f),      //superior derecho
+                new PointF(cx-bMenor, cy-h/2f)       //superior izquierdo
             };
-
-            EscalarYCentrar(puntos, panel1.ClientSize);
 
             using (var brush = new SolidBrush(Color.FromArgb(180, 144, 238, 144)))
             using (var pen = new Pen(Color.DarkGreen, 2))
             {
                 g.FillPolygon(brush, puntos);
                 g.DrawPolygon(pen, puntos);
-            }
-
-        }
-
-        private void EscalarYCentrar(PointF[] puntos, Size panelSize)
-        {
-            float minX = float.MaxValue, maxX = float.MinValue;
-            float minY = float.MaxValue, maxY = float.MinValue;
-
-            foreach (var p in puntos)
-            {
-                if (p.X < minX) minX = p.X;
-                if (p.X > maxX) maxX = p.X;
-                if (p.Y < minY) minY = p.Y;
-                if (p.Y > maxY) maxY = p.Y;
-            }
-
-            float escalaX = (panelSize.Width - 2 * margin) / (maxX - minX);
-            float escalaY = (panelSize.Height - 2 * margin) / (maxY - minY);
-            float escala = Math.Min(escalaX, escalaY);
-
-            for (int i = 0; i < puntos.Length; i++)
-            {
-                puntos[i].X = (puntos[i].X - minX) * escala + margin;
-                puntos[i].Y = (puntos[i].Y - minY) * escala + margin;
             }
         }
         }
