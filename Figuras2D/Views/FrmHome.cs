@@ -171,6 +171,12 @@ namespace Figuras2D.Views
         {
 
         }
+
+        private void elipseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmElipse f = new FrmElipse();
+            f.MdiParent = this; f.Show();
+        }
     }
 
     public class MenuRendererOscuro : ToolStripProfessionalRenderer
