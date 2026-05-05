@@ -104,8 +104,14 @@ namespace Figuras2D.Views
                 LimpiarResultados();
                 return;
             }
+            double maxRenderableSide = GetMaxRenderableSide();
+            if (maxRenderableSide < 0)
+            {
+                lblMensaje.Text = "El área de dibujo es demasiado pequeña para mostrar el triángulo.";
+                LimpiarResultados();
+                return;
+            }
 
-            
             _figuraActual = triangle;
             lblAreaResult.Text = presenter.Area.ToString("0.00");
             lblPerimetroResult.Text = presenter.Perimeter.ToString("0.00");

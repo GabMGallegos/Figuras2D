@@ -23,7 +23,7 @@ namespace Figuras2D.Views
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panelElipse.Paint += panelElipse_Paint;
 
-            // 🎨 AppTheme (igual que Semicircle)
+            //AppTheme (igual que Semicircle)
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
             this.Font = AppTheme.FontMenu;
@@ -69,6 +69,21 @@ namespace Figuras2D.Views
                 return;
             }
 
+            // Dentro de btnCalcular_Click, después de verificar presenter.IsValid
+            float escalaFija = 5f; // El estándar que estamos usando
+            double anchoReal = a * 2 * escalaFija;
+            double altoReal = b * 2 * escalaFija;
+
+            // Validación de tamaño máximo
+            if (anchoReal > panelElipse.ClientSize.Width - (2 * Margin) ||
+                altoReal > panelElipse.ClientSize.Height - (2 * Margin))
+            {
+                lblMensaje.Text = "La elipse es demasiado grande para el panel.";
+    _elipseActual = null;
+                panelElipse.Invalidate();
+                return;
+            }
+
             _elipseActual = elipse;
 
             lblAreaResultado.Text = presenter.Area.ToString("0.00");
@@ -93,35 +108,25 @@ namespace Figuras2D.Views
 
         private void panelElipse_Paint(object sender, PaintEventArgs e)
         {
-            if (_elipseActual == null)
-                return;
+            if (_elipseActual == null) return;
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            float a = (float)_elipseActual.SemiejeMayor;
-            float b = (float)_elipseActual.SemiejeMenor;
+            float escalaFija = 5f; // Usar el mismo factor que en el botón
+            float width = (float)_elipseActual.SemiejeMayor * 2 * escalaFija;
+    float height = (float)_elipseActual.SemiejeMenor * 2 * escalaFija;
 
-            float width = a * 2;
-            float height = b * 2;
-
-            float maxWidth = panelElipse.ClientSize.Width - (2 * Margin);
-            float maxHeight = panelElipse.ClientSize.Height - (2 * Margin);
-
-            float scale = Math.Min(maxWidth / width, maxHeight / height);
-
-            width *= scale;
-            height *= scale;
-
-            float x = (panelElipse.Width - width) / 2;
-            float y = (panelElipse.Height - height) / 2;
+    // Centrado manual en el panel[cite: 11]
+    float x = (panelElipse.ClientSize.Width - width) / 2;
+            float y = (panelElipse.ClientSize.Height - height) / 2;
 
             using (SolidBrush brush = new SolidBrush(Color.Tomato))
             using (Pen pen = new Pen(Color.Black, 2))
             {
                 g.FillEllipse(brush, x, y, width, height);
-                g.DrawEllipse(pen, x, y, width, height);
-            }
+        g.DrawEllipse(pen, x, y, width, height); 
+    }
         }
     }
 }
