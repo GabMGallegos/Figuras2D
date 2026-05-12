@@ -103,20 +103,28 @@ namespace Figuras2D.Views
         private void FmrSquare_KeyDown(object sender, KeyEventArgs e)
         {
             float pasoTraslacion = 10f;
-            float pasoEscala = 1.1f;
             float pasoRotacion = 10f;
 
             bool huboTransformacion = _transformacion.ProcesarTecla(
                 e.KeyCode,
                 pasoTraslacion,
-                pasoEscala,
+                1f,
                 pasoRotacion
+      
             );
 
             if (huboTransformacion)
             {
                 panel2.Invalidate();
             }
+        }
+        private void trackBarSquare_Scroll(object sender, EventArgs e)
+        {
+            float escala = trackBarSquare.Value / 10f;
+
+            _transformacion.EstablecerEscala(escala);
+
+            panel2.Invalidate();
         }
 
         private float CalcularEscala(double lado)

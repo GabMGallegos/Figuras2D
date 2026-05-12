@@ -99,14 +99,6 @@ namespace Figuras2D.Helpers
             {
                 MoverDerecha(pasoTraslacion);
             }
-            else if (tecla == Keys.Add || tecla == Keys.Oemplus)
-            {
-                AumentarEscala(pasoEscala);
-            }
-            else if (tecla == Keys.Subtract || tecla == Keys.OemMinus)
-            {
-                ReducirEscala(pasoEscala);
-            }
             else if (tecla == Keys.A)
             {
                 RotarAntihorario(pasoRotacion);
@@ -125,6 +117,10 @@ namespace Figuras2D.Helpers
             }
 
             return true;
+        }
+        public void EstablecerEscala(float escala)
+        {
+            FactorEscala = escala;
         }
     }
 }
