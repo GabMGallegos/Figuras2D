@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D
 {
     public partial class FrmCross : Form
     {
         private Cross _crossActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
         private const double MinRenderableSize = 20;
@@ -24,6 +26,9 @@ namespace Figuras2D
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panel2.Paint += panel2_Paint;
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmCross_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -117,6 +122,8 @@ namespace Figuras2D
             lblMensaje.Text = "";
 
             _crossActual = null;
+            _transformacion.Reiniciar();
+
             panel2.Invalidate();
         }
 
@@ -129,6 +136,7 @@ namespace Figuras2D
 
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.Clear(panel2.BackColor);
 
             float longitudTotal = (float)_crossActual.ArmLength;
             float grosor = (float)_crossActual.Thickness;
@@ -154,11 +162,37 @@ namespace Figuras2D
                 new PointF(x + espacio, y + espacio)
             };
 
+            PointF centro = new PointF(panel2.Width / 2f, panel2.Height / 2f);
+
+            for (int i = 0; i < puntos.Length; i++)
+            {
+                puntos[i] = _transformacion.Aplicar(puntos[i], centro);
+            }
+
             using (SolidBrush brush = new SolidBrush(Color.MediumPurple))
             using (Pen pen = new Pen(Color.Black, 2))
             {
                 graphics.FillPolygon(brush, puntos);
                 graphics.DrawPolygon(pen, puntos);
+            }
+        }
+
+        private void FrmCross_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel2.Invalidate();
             }
         }
     }

@@ -1,15 +1,10 @@
 ﻿using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Figuras2D.Views
@@ -17,8 +12,9 @@ namespace Figuras2D.Views
     public partial class FrmCrescentMoon : Form
     {
         private CrescentMoon _figuraActual;
-        private const float margin = 20f;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
+        private const float margin = 20f;
         private const double MinRenderableSide = 20;
 
         private float GetMaxRenderableDiameter()
@@ -32,7 +28,6 @@ namespace Figuras2D.Views
             return maxDiameter / 2.0;
         }
 
-
         public FrmCrescentMoon()
         {
             InitializeComponent();
@@ -42,6 +37,9 @@ namespace Figuras2D.Views
             panel1.Paint += panelLuna_Paint;
 
             txtRadio.TextChanged += (s, e) => LimpiarResultados();
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmCrescentMoon_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -55,10 +53,16 @@ namespace Figuras2D.Views
 
         private bool TryGetDouble(TextBox textBox, out double value)
         {
-            return double.TryParse(textBox.Text,
-                       NumberStyles.Float, CultureInfo.CurrentCulture, out value)
-                || double.TryParse(textBox.Text,
-                       NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+            return double.TryParse(
+                       textBox.Text,
+                       NumberStyles.Float,
+                       CultureInfo.CurrentCulture,
+                       out value)
+                || double.TryParse(
+                       textBox.Text,
+                       NumberStyles.Float,
+                       CultureInfo.InvariantCulture,
+                       out value);
         }
 
         private void LimpiarResultados()
@@ -66,7 +70,10 @@ namespace Figuras2D.Views
             lblAreaResult.Text = "0.00";
             lblPerimetroResult.Text = "0.00";
             lblMensaje.Text = "";
+
             _figuraActual = null;
+            _transformacion.Reiniciar();
+
             panel1.Invalidate();
         }
 
@@ -74,8 +81,8 @@ namespace Figuras2D.Views
         {
             if (!TryGetDouble(txtRadio, out double radio))
             {
-                lblMensaje.Text = "Ingrese un valor numérico válido para el radio.";
                 LimpiarResultados();
+                lblMensaje.Text = "Ingrese un valor numérico válido para el radio.";
                 return;
             }
 
@@ -84,8 +91,8 @@ namespace Figuras2D.Views
 
             if (!presenter.IsValid)
             {
-                lblMensaje.Text = "El radio debe ser mayor a 0.";
                 LimpiarResultados();
+                lblMensaje.Text = "El radio debe ser mayor a 0.";
                 return;
             }
 
@@ -108,6 +115,7 @@ namespace Figuras2D.Views
             }
 
             _figuraActual = moon;
+
             lblAreaResult.Text = presenter.Area.ToString("0.00");
             lblPerimetroResult.Text = presenter.Perimeter.ToString("0.00");
             lblMensaje.Text = "";
@@ -115,12 +123,11 @@ namespace Figuras2D.Views
             panel1.Invalidate();
         }
 
-
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             LimpiarResultados();
+            txtRadio.Text = "";
         }
-
 
         private void panelLuna_Paint(object sender, PaintEventArgs e)
         {
@@ -134,37 +141,73 @@ namespace Figuras2D.Views
             float cx = panel1.ClientSize.Width / 2f;
             float cy = panel1.ClientSize.Height / 2f;
 
-            
-            float R =(float)_figuraActual.Radius;
+            float R = (float)_figuraActual.Radius;
+            float RTransformado = R * _transformacion.FactorEscala;
 
-            
-            float r = R * 0.75f;   // radio del círculo interior
-            float d = R * 0.35f;   // desplazamiento hacia la derecha
+            float r = RTransformado * 0.75f;
+            float d = RTransformado * 0.35f;
 
-            
-            var outerRect = new RectangleF(cx - R, cy - R, 2 * R, 2 * R);
-            
-            var innerRect = new RectangleF(cx - r + d, cy - r, 2 * r, 2 * r);
+            PointF centroOriginal = new PointF(cx, cy);
+            PointF centroTransformado = _transformacion.Aplicar(centroOriginal, centroOriginal);
 
-            using (var outerPath = new GraphicsPath())
-            using (var innerPath = new GraphicsPath())
+            GraphicsState estadoOriginal = g.Save();
+
+            g.TranslateTransform(centroTransformado.X, centroTransformado.Y);
+            g.RotateTransform(_transformacion.AnguloRotacion);
+
+            RectangleF outerRect = new RectangleF(
+                -RTransformado,
+                -RTransformado,
+                2 * RTransformado,
+                2 * RTransformado
+            );
+
+            RectangleF innerRect = new RectangleF(
+                -r + d,
+                -r,
+                2 * r,
+                2 * r
+            );
+
+            using (GraphicsPath outerPath = new GraphicsPath())
+            using (GraphicsPath innerPath = new GraphicsPath())
             {
                 outerPath.AddEllipse(outerRect);
                 innerPath.AddEllipse(innerRect);
 
-                
-                var region = new Region(outerPath);
-                region.Exclude(innerPath);
-
-                using (var brush = new SolidBrush(Color.FromArgb(210, 255, 248, 180)))
+                using (Region region = new Region(outerPath))
                 {
-                    
-                    g.FillRegion(brush, region);
-                }
+                    region.Exclude(innerPath);
 
-                region.Dispose();
+                    using (SolidBrush brush = new SolidBrush(Color.FromArgb(210, 255, 248, 180)))
+                    using (Pen pen = new Pen(Color.Goldenrod, 2))
+                    {
+                        g.FillRegion(brush, region);
+                        g.DrawPath(pen, outerPath);
+                    }
+                }
             }
 
+            g.Restore(estadoOriginal);
+        }
+
+        private void FrmCrescentMoon_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel1.Invalidate();
+            }
         }
     }
 }

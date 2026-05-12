@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D
 {
     public partial class FrmOctagon : Form
     {
         private Octagon _octagonActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
         private const double MinRenderableSide = 20;
@@ -24,6 +26,9 @@ namespace Figuras2D
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             PanelDibujo.Paint += panel2_Paint;
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmOctagon_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -122,6 +127,8 @@ namespace Figuras2D
             lblMensaje.Text = "";
 
             _octagonActual = null;
+            _transformacion.Reiniciar();
+
             PanelDibujo.Invalidate();
         }
 
@@ -134,6 +141,7 @@ namespace Figuras2D
 
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.Clear(PanelDibujo.BackColor);
 
             float lado = (float)_octagonActual.Side;
 
@@ -141,6 +149,8 @@ namespace Figuras2D
 
             float centerX = PanelDibujo.ClientSize.Width / 2f;
             float centerY = PanelDibujo.ClientSize.Height / 2f;
+
+            PointF centro = new PointF(centerX, centerY);
 
             PointF[] puntos = new PointF[8];
 
@@ -152,6 +162,8 @@ namespace Figuras2D
                     centerX + radio * (float)Math.Cos(angle),
                     centerY + radio * (float)Math.Sin(angle)
                 );
+
+                puntos[i] = _transformacion.Aplicar(puntos[i], centro);
             }
 
             using (SolidBrush brush = new SolidBrush(Color.LightSalmon))
@@ -159,6 +171,25 @@ namespace Figuras2D
             {
                 graphics.FillPolygon(brush, puntos);
                 graphics.DrawPolygon(pen, puntos);
+            }
+        }
+
+        private void FrmOctagon_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                PanelDibujo.Invalidate();
             }
         }
 

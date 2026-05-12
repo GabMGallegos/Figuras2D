@@ -3,18 +3,24 @@ using System.Drawing;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D.Views
 {
     public partial class FmrSquare : Form
     {
         private SquarePresenter _presenter;
+        private Transformacion2D _transformacion = new Transformacion2D();
         private double _maxLado = 100;
 
         public FmrSquare()
         {
             InitializeComponent();
+
             this.Resize += FmrSquare_Resize;
+
+            this.KeyPreview = true;
+            this.KeyDown += FmrSquare_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -61,6 +67,7 @@ namespace Figuras2D.Views
             lblPerimetroResultado.Text = "";
             lblAreaResultado.Text = "";
             _presenter = null;
+            _transformacion.Reiniciar();
             panel2.Invalidate();
         }
 
@@ -75,12 +82,14 @@ namespace Figuras2D.Views
 
             double lado = _presenter.Side;
             float scale = CalcularEscala(lado);
+
             PointF[] points = _presenter.GetDrawingPoints(scale);
-            Point centro = new Point(panel2.Width / 2, panel2.Height / 2);
+            PointF centro = new PointF(panel2.Width / 2f, panel2.Height / 2f);
 
             for (int i = 0; i < points.Length; i++)
             {
                 points[i] = new PointF(centro.X + points[i].X, centro.Y + points[i].Y);
+                points[i] = _transformacion.Aplicar(points[i], centro);
             }
 
             using (Brush relleno = new SolidBrush(Color.LightGreen))
@@ -91,6 +100,25 @@ namespace Figuras2D.Views
             }
         }
 
+        private void FmrSquare_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel2.Invalidate();
+            }
+        }
+
         private float CalcularEscala(double lado)
         {
             float areaDisponible = Math.Min(panel2.Width, panel2.Height) * 0.8f;
@@ -98,6 +126,7 @@ namespace Figuras2D.Views
 
             if (escala > areaDisponible)
                 escala = areaDisponible;
+
             if (escala < 5)
                 escala = 5;
 

@@ -5,21 +5,29 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D.Views
 {
     public partial class FrmTriangle : Form
     {
         private Triangle _triangleActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
+
         private const float Margin = 20f;
         private const double MinRenderableSize = 10;
 
         public FrmTriangle()
         {
             InitializeComponent();
+
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panelTriangulo.Paint += panelTriangulo_Paint;
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmTriangle_KeyDown;
+
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
             this.Font = AppTheme.FontMenu;
@@ -76,9 +84,7 @@ namespace Figuras2D.Views
             }
 
             float maxRenderableWidth = GetMaxRenderableWidth();
-            float maxRenderableHeight = GetMaxRenderableHeight();
 
-            double[] lados = { ladoA, ladoB, ladoC };
             double ladoMaximo = Math.Max(ladoA, Math.Max(ladoB, ladoC));
 
             if (ladoMaximo < MinRenderableSize)
@@ -123,6 +129,8 @@ namespace Figuras2D.Views
             lblMensaje.Text = "";
 
             _triangleActual = null;
+            _transformacion.Reiniciar();
+
             panelTriangulo.Invalidate();
         }
 
@@ -159,6 +167,30 @@ namespace Figuras2D.Views
                 puntos[i].Y = (puntos[i].Y - minY) * escala + Margin;
             }
 
+            minX = Math.Min(puntos[0].X, Math.Min(puntos[1].X, puntos[2].X));
+            maxX = Math.Max(puntos[0].X, Math.Max(puntos[1].X, puntos[2].X));
+            minY = Math.Min(puntos[0].Y, Math.Min(puntos[1].Y, puntos[2].Y));
+            maxY = Math.Max(puntos[0].Y, Math.Max(puntos[1].Y, puntos[2].Y));
+
+            float offsetX = (panelTriangulo.ClientSize.Width - (maxX - minX)) / 2f - minX;
+            float offsetY = (panelTriangulo.ClientSize.Height - (maxY - minY)) / 2f - minY;
+
+            for (int i = 0; i < puntos.Length; i++)
+            {
+                puntos[i].X += offsetX;
+                puntos[i].Y += offsetY;
+            }
+
+            PointF centro = new PointF(
+                panelTriangulo.ClientSize.Width / 2f,
+                panelTriangulo.ClientSize.Height / 2f
+            );
+
+            for (int i = 0; i < puntos.Length; i++)
+            {
+                puntos[i] = _transformacion.Aplicar(puntos[i], centro);
+            }
+
             using (SolidBrush brush = new SolidBrush(Color.LightBlue))
             using (Pen pen = new Pen(Color.Blue, 2))
             {
@@ -171,14 +203,43 @@ namespace Figuras2D.Views
         {
             PointF[] puntos = new PointF[3];
 
-            double anguloA = Math.Acos((b * b + c * c - a * a) / (2 * b * c));
-            double anguloB = Math.Acos((a * a + c * c - b * b) / (2 * a * c));
+            double cosA = (b * b + c * c - a * a) / (2 * b * c);
+
+            if (cosA < -1)
+                cosA = -1;
+
+            if (cosA > 1)
+                cosA = 1;
+
+            double anguloA = Math.Acos(cosA);
 
             puntos[0] = new PointF(0, 0);
             puntos[1] = new PointF((float)c, 0);
-            puntos[2] = new PointF((float)(b * Math.Cos(anguloA)), (float)(-b * Math.Sin(anguloA)));
+            puntos[2] = new PointF(
+                (float)(b * Math.Cos(anguloA)),
+                (float)(-b * Math.Sin(anguloA))
+            );
 
             return puntos;
+        }
+
+        private void FrmTriangle_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panelTriangulo.Invalidate();
+            }
         }
     }
 }

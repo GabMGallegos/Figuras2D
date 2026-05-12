@@ -3,18 +3,24 @@ using System.Drawing;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D.Views
 {
     public partial class FmrCircle : Form
     {
         private CirclePresenter _presenter;
+        private Transformacion2D _transformacion = new Transformacion2D();
         private double _maxRadius = 100;
 
         public FmrCircle()
         {
             InitializeComponent();
+
             this.Resize += FmrCircle_Resize;
+
+            this.KeyPreview = true;
+            this.KeyDown += FmrCircle_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -61,6 +67,7 @@ namespace Figuras2D.Views
             lblPerimetroResultado.Text = "";
             lblAreaResultado.Text = "";
             _presenter = null;
+            _transformacion.Reiniciar();
             panelCirculo.Invalidate();
         }
 
@@ -75,12 +82,14 @@ namespace Figuras2D.Views
 
             double radio = _presenter.Radius;
             float scale = CalcularEscala(radio);
+
             PointF[] points = _presenter.GetDrawingPoints(scale);
-            Point centro = new Point(panelCirculo.Width / 2, panelCirculo.Height / 2);
+            PointF centro = new PointF(panelCirculo.Width / 2f, panelCirculo.Height / 2f);
 
             for (int i = 0; i < points.Length; i++)
             {
                 points[i] = new PointF(centro.X + points[i].X, centro.Y + points[i].Y);
+                points[i] = _transformacion.Aplicar(points[i], centro);
             }
 
             using (Brush relleno = new SolidBrush(Color.LightCoral))
@@ -91,6 +100,25 @@ namespace Figuras2D.Views
             }
         }
 
+        private void FmrCircle_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panelCirculo.Invalidate();
+            }
+        }
+
         private float CalcularEscala(double radio)
         {
             float areaDisponible = Math.Min(panelCirculo.Width, panelCirculo.Height) * 0.8f;
@@ -98,6 +126,7 @@ namespace Figuras2D.Views
 
             if (escala > areaDisponible)
                 escala = areaDisponible;
+
             if (escala < 5)
                 escala = 5;
 

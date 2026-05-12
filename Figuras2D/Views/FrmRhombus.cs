@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D
 {
     public partial class FrmRhombus : Form
     {
         private Rhombus _rhombusActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
         private const double MinRenderableSize = 20;
@@ -24,6 +26,9 @@ namespace Figuras2D
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panel2.Paint += panel2_Paint;
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmRhombus_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -136,6 +141,8 @@ namespace Figuras2D
             lblMensaje.Text = "";
 
             _rhombusActual = null;
+            _transformacion.Reiniciar();
+
             panel2.Invalidate();
         }
 
@@ -148,12 +155,15 @@ namespace Figuras2D
 
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.Clear(panel2.BackColor);
 
             float diagonalMayor = (float)_rhombusActual.DiagonalMajor;
             float diagonalMenor = (float)_rhombusActual.DiagonalMinor;
 
             float centerX = panel2.ClientSize.Width / 2f;
             float centerY = panel2.ClientSize.Height / 2f;
+
+            PointF centro = new PointF(centerX, centerY);
 
             PointF puntoSuperior = new PointF(
                 centerX,
@@ -183,11 +193,35 @@ namespace Figuras2D
                 puntoIzquierdo
             };
 
+            for (int i = 0; i < puntos.Length; i++)
+            {
+                puntos[i] = _transformacion.Aplicar(puntos[i], centro);
+            }
+
             using (SolidBrush brush = new SolidBrush(Color.MediumTurquoise))
             using (Pen pen = new Pen(Color.Black, 2))
             {
                 graphics.FillPolygon(brush, puntos);
                 graphics.DrawPolygon(pen, puntos);
+            }
+        }
+
+        private void FrmRhombus_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel2.Invalidate();
             }
         }
     }

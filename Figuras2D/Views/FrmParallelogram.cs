@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D
 {
     public partial class FrmParallelogram : Form
     {
         private Parallelogram _parallelogramActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
         private const double MinRenderableSize = 20;
@@ -25,7 +27,10 @@ namespace Figuras2D
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panel2.Paint += panel2_Paint;
 
-                        this.BackColor = AppTheme.BgMain;
+            this.KeyPreview = true;
+            this.KeyDown += FrmParallelogram_KeyDown;
+
+            this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
             this.Font = AppTheme.FontMenu;
             this.btnCalcular.BackColor = AppTheme.Accent;
@@ -81,9 +86,7 @@ namespace Figuras2D
             float maxWidth = GetMaxRenderableWidth();
             float maxHeight = GetMaxRenderableHeight();
 
-            // Alto real = lado * sin(angulo)
             double altoReal = lado * Math.Sin(angulo * Math.PI / 180);
-            // Ancho real = base + lado * cos(angulo)
             double anchoReal = base_ + lado * Math.Abs(Math.Cos(angulo * Math.PI / 180));
 
             if (base_ < MinRenderableSize || lado < MinRenderableSize)
@@ -120,6 +123,7 @@ namespace Figuras2D
             lblAreaResultado.Text = presenter.Area.ToString("0.00");
             lblPerimetroResultado.Text = presenter.Perimeter.ToString("0.00");
             lblMensaje.Text = "";
+
             panel2.Invalidate();
         }
 
@@ -128,19 +132,25 @@ namespace Figuras2D
             txtBase.Clear();
             txtLado.Clear();
             txtAngulo.Clear();
+
             lblAreaResultado.Text = "0.00";
             lblPerimetroResultado.Text = "0.00";
             lblMensaje.Text = "";
+
             _parallelogramActual = null;
+            _transformacion.Reiniciar();
+
             panel2.Invalidate();
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-            if (_parallelogramActual == null) return;
+            if (_parallelogramActual == null)
+                return;
 
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.Clear(panel2.BackColor);
 
             float base_ = (float)_parallelogramActual.Base;
             float lado = (float)_parallelogramActual.Lado;
@@ -155,17 +165,46 @@ namespace Figuras2D
 
             PointF[] puntos = new PointF[]
             {
-                new PointF(x + Math.Abs(desplazamiento), y),           
-                new PointF(x + anchoTotal, y),                          
-                new PointF(x + base_, y + alto),                        
-                new PointF(x, y + alto)                                
+                new PointF(x + Math.Abs(desplazamiento), y),
+                new PointF(x + anchoTotal, y),
+                new PointF(x + base_, y + alto),
+                new PointF(x, y + alto)
             };
+
+            PointF centro = new PointF(
+                panel2.ClientSize.Width / 2f,
+                panel2.ClientSize.Height / 2f
+            );
+
+            for (int i = 0; i < puntos.Length; i++)
+            {
+                puntos[i] = _transformacion.Aplicar(puntos[i], centro);
+            }
 
             using (SolidBrush brush = new SolidBrush(Color.LightSalmon))
             using (Pen pen = new Pen(Color.Black, 2))
             {
                 graphics.FillPolygon(brush, puntos);
                 graphics.DrawPolygon(pen, puntos);
+            }
+        }
+
+        private void FrmParallelogram_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel2.Invalidate();
             }
         }
     }

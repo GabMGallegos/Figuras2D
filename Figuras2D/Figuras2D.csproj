@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppTheme.cs" />
+    <Compile Include="Helpers\Transformacion2D.cs" />
     <Compile Include="Models\Clover.cs" />
     <Compile Include="Models\CrescentMoon.cs" />
     <Compile Include="Models\Hexagon.cs" />

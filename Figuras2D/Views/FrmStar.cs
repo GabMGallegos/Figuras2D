@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D
 {
     public partial class FrmStar : Form
     {
         private Star _starActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
         private const double MinRenderableSize = 20;
@@ -24,6 +26,9 @@ namespace Figuras2D
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panel2.Paint += panel2_Paint;
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmStar_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -112,37 +117,49 @@ namespace Figuras2D
             txtRadioExterno.Clear();
             txtRadioInterno.Clear();
             txtPuntas.Clear();
+
             lblAreaResultado.Text = "0.00";
             lblPerimetroResultado.Text = "0.00";
             lblMensaje.Text = "";
+
             _starActual = null;
+            _transformacion.Reiniciar();
+
             panel2.Invalidate();
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-            if (_starActual == null) return;
+            if (_starActual == null)
+                return;
 
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.Clear(panel2.BackColor);
 
             float cx = panel2.ClientSize.Width / 2f;
             float cy = panel2.ClientSize.Height / 2f;
+
+            PointF centro = new PointF(cx, cy);
+
             float radioExterno = (float)_starActual.RadioExterno;
             float radioInterno = (float)_starActual.RadioInterno;
             int puntas = _starActual.Puntas;
 
             PointF[] puntos = new PointF[puntas * 2];
-            double anguloInicial = -Math.PI / 2; // Punta hacia arriba
+            double anguloInicial = -Math.PI / 2;
 
             for (int i = 0; i < puntas * 2; i++)
             {
                 double angulo = anguloInicial + i * Math.PI / puntas;
                 float radio = (i % 2 == 0) ? radioExterno : radioInterno;
+
                 puntos[i] = new PointF(
                     cx + radio * (float)Math.Cos(angulo),
                     cy + radio * (float)Math.Sin(angulo)
                 );
+
+                puntos[i] = _transformacion.Aplicar(puntos[i], centro);
             }
 
             using (SolidBrush brush = new SolidBrush(Color.MediumVioletRed))
@@ -150,6 +167,25 @@ namespace Figuras2D
             {
                 graphics.FillPolygon(brush, puntos);
                 graphics.DrawPolygon(pen, puntos);
+            }
+        }
+
+        private void FrmStar_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel2.Invalidate();
             }
         }
     }

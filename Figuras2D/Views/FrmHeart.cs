@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D
 {
     public partial class FrmHeart : Form
     {
         private Heart _heartActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
         private const double MinRenderableSize = 20;
@@ -24,6 +26,9 @@ namespace Figuras2D
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panel2.Paint += panel2_Paint;
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmHeart_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -134,6 +139,8 @@ namespace Figuras2D
             lblMensaje.Text = "";
 
             _heartActual = null;
+            _transformacion.Reiniciar();
+
             panel2.Invalidate();
         }
 
@@ -146,6 +153,7 @@ namespace Figuras2D
 
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.Clear(panel2.BackColor);
 
             float ancho = (float)_heartActual.Width;
             float alto = (float)_heartActual.Height;
@@ -156,11 +164,27 @@ namespace Figuras2D
             float centroX = x + ancho / 2f;
             float centroY = y + alto / 2f;
 
-            // Rombo base
-            PointF puntoSuperior = new PointF(centroX, y);
-            PointF puntoDerecho = new PointF(x + ancho, centroY);
-            PointF puntoInferior = new PointF(centroX, y + alto);
-            PointF puntoIzquierdo = new PointF(x, centroY);
+            PointF centroOriginal = new PointF(centroX, centroY);
+            PointF centroTransformado = _transformacion.Aplicar(centroOriginal, centroOriginal);
+
+            float anchoTransformado = ancho * _transformacion.FactorEscala;
+            float altoTransformado = alto * _transformacion.FactorEscala;
+
+            GraphicsState estadoPrincipal = graphics.Save();
+
+            graphics.TranslateTransform(centroTransformado.X, centroTransformado.Y);
+            graphics.RotateTransform(_transformacion.AnguloRotacion);
+
+            float xLocal = -anchoTransformado / 2f;
+            float yLocal = -altoTransformado / 2f;
+
+            float centroXLocal = 0f;
+            float centroYLocal = 0f;
+
+            PointF puntoSuperior = new PointF(centroXLocal, yLocal);
+            PointF puntoDerecho = new PointF(xLocal + anchoTransformado, centroYLocal);
+            PointF puntoInferior = new PointF(centroXLocal, yLocal + altoTransformado);
+            PointF puntoIzquierdo = new PointF(xLocal, centroYLocal);
 
             PointF[] puntosRombo =
             {
@@ -170,17 +194,14 @@ namespace Figuras2D
                 puntoIzquierdo
             };
 
-            // Longitud de los lados superiores del rombo
             float ladoSuperiorIzquierdo = Distance(puntoSuperior, puntoIzquierdo);
             float ladoSuperiorDerecho = Distance(puntoSuperior, puntoDerecho);
 
             float ejeMayor = Math.Min(ladoSuperiorIzquierdo, ladoSuperiorDerecho);
 
-            // Relación para círculo / óvalo
-            float proporcion = alto / ancho;
+            float proporcion = altoTransformado / anchoTransformado;
             float ejeMenor = ejeMayor * proporcion;
 
-            // Límites para que no quede exagerado
             if (ejeMenor < ejeMayor * 0.45f)
             {
                 ejeMenor = ejeMayor * 0.45f;
@@ -191,30 +212,45 @@ namespace Figuras2D
                 ejeMenor = ejeMayor;
             }
 
-            // Centros de los lóbulos
             PointF centroElipseIzquierda = MidPoint(puntoSuperior, puntoIzquierdo);
             PointF centroElipseDerecha = MidPoint(puntoSuperior, puntoDerecho);
 
-            // Ángulos de inclinación
             float anguloIzquierdo = AngleDegrees(puntoIzquierdo, puntoSuperior);
             float anguloDerecho = AngleDegrees(puntoSuperior, puntoDerecho);
 
             using (SolidBrush brush = new SolidBrush(Color.Red))
             using (Pen pen = new Pen(Color.Black, 2))
             {
-                // Relleno
                 graphics.FillPolygon(brush, puntosRombo);
                 FillRotatedEllipse(graphics, brush, centroElipseIzquierda, ejeMayor, ejeMenor, anguloIzquierdo);
                 FillRotatedEllipse(graphics, brush, centroElipseDerecha, ejeMayor, ejeMenor, anguloDerecho);
 
-                // SOLO contorno visible:
-                // 1) La V inferior
                 graphics.DrawLine(pen, puntoIzquierdo, puntoInferior);
                 graphics.DrawLine(pen, puntoInferior, puntoDerecho);
 
-                // 2) SOLO mitad superior de cada lóbulo
                 DrawUpperHalfRotatedEllipse(graphics, pen, centroElipseIzquierda, ejeMayor, ejeMenor, anguloIzquierdo);
                 DrawUpperHalfRotatedEllipse(graphics, pen, centroElipseDerecha, ejeMayor, ejeMenor, anguloDerecho);
+            }
+
+            graphics.Restore(estadoPrincipal);
+        }
+
+        private void FrmHeart_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel2.Invalidate();
             }
         }
 
@@ -225,7 +261,6 @@ namespace Figuras2D
             graphics.TranslateTransform(centro.X, centro.Y);
             graphics.RotateTransform(angulo);
 
-            // Solo la mitad superior
             graphics.DrawArc(
                 pen,
                 -ejeMayor / 2f,

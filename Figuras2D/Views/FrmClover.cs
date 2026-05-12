@@ -1,15 +1,10 @@
 ﻿using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Figuras2D.Views
@@ -17,6 +12,8 @@ namespace Figuras2D.Views
     public partial class FrmClover : Form
     {
         private Clover _figuraActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
+
         private const float margin = 20f;
         private const double MinRenderableSide = 20;
 
@@ -24,6 +21,7 @@ namespace Figuras2D.Views
         {
             return Math.Min(panel1.ClientSize.Width, panel1.ClientSize.Height) - (2 * margin);
         }
+
         private double GetMaxRenderableSide()
         {
             float maxDiameter = GetMaxRenderableDiameter();
@@ -40,6 +38,9 @@ namespace Figuras2D.Views
 
             txtRadio.TextChanged += (s, e) => LimpiarResultados();
 
+            this.KeyPreview = true;
+            this.KeyDown += FrmClover_KeyDown;
+
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
             this.Font = AppTheme.FontMenu;
@@ -52,10 +53,16 @@ namespace Figuras2D.Views
 
         private bool TryGetDouble(TextBox textBox, out double value)
         {
-            return double.TryParse(textBox.Text,
-                       NumberStyles.Float, CultureInfo.CurrentCulture, out value)
-                || double.TryParse(textBox.Text,
-                       NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+            return double.TryParse(
+                       textBox.Text,
+                       NumberStyles.Float,
+                       CultureInfo.CurrentCulture,
+                       out value)
+                || double.TryParse(
+                       textBox.Text,
+                       NumberStyles.Float,
+                       CultureInfo.InvariantCulture,
+                       out value);
         }
 
         private void LimpiarResultados()
@@ -65,6 +72,8 @@ namespace Figuras2D.Views
             lblMensaje.Text = "";
 
             _figuraActual = null;
+            _transformacion.Reiniciar();
+
             panel1.Invalidate();
         }
 
@@ -72,8 +81,8 @@ namespace Figuras2D.Views
         {
             if (!TryGetDouble(txtRadio, out double radio))
             {
-                lblMensaje.Text = "Ingrese un valor numérico válido para el radio.";
                 LimpiarResultados();
+                lblMensaje.Text = "Ingrese un valor numérico válido para el radio.";
                 return;
             }
 
@@ -82,8 +91,8 @@ namespace Figuras2D.Views
 
             if (!presenter.IsValid)
             {
-                lblMensaje.Text = "El radio debe ser mayor a 0.";
                 LimpiarResultados();
+                lblMensaje.Text = "El radio debe ser mayor a 0.";
                 return;
             }
 
@@ -106,13 +115,13 @@ namespace Figuras2D.Views
             }
 
             _figuraActual = clover;
+
             lblAreaResult.Text = presenter.Area.ToString("0.00");
             lblPerimetroResult.Text = presenter.Perimeter.ToString("0.00");
             lblMensaje.Text = "";
 
             panel1.Invalidate();
         }
-
 
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
@@ -132,25 +141,59 @@ namespace Figuras2D.Views
             float cx = panel1.ClientSize.Width / 2f;
             float cy = panel1.ClientSize.Height / 2f;
 
-            // El radio máximo para que quepa en el panel considerando el margen
-            float r = (float) _figuraActual.Radius;
+            float r = (float)_figuraActual.Radius;
+            float rTransformado = r * _transformacion.FactorEscala;
+
+            PointF centroOriginal = new PointF(cx, cy);
+            PointF centroTransformado = _transformacion.Aplicar(centroOriginal, centroOriginal);
+
+            GraphicsState estadoOriginal = g.Save();
+
+            g.TranslateTransform(centroTransformado.X, centroTransformado.Y);
+            g.RotateTransform(_transformacion.AnguloRotacion);
 
             using (var path = new GraphicsPath())
             using (var brush = new SolidBrush(Color.FromArgb(180, 32, 178, 170)))
             using (var pen = new Pen(Color.SeaGreen, 2))
             {
-                //tres hojas separadas 120 grados, cada una es un círculo con radio r
                 for (int i = 0; i < 3; i++)
                 {
                     double angulo = (i * 120 - 90) * Math.PI / 180.0;
-                    float lx = cx + (float)(r * Math.Cos(angulo));
-                    float ly = cy + (float)(r * Math.Sin(angulo));
 
-                    path.AddEllipse(lx - r, ly - r, 2 * r, 2 * r);
+                    float lx = (float)(rTransformado * Math.Cos(angulo));
+                    float ly = (float)(rTransformado * Math.Sin(angulo));
+
+                    path.AddEllipse(
+                        lx - rTransformado,
+                        ly - rTransformado,
+                        2 * rTransformado,
+                        2 * rTransformado
+                    );
                 }
 
                 g.FillPath(brush, path);
                 g.DrawPath(pen, path);
+            }
+
+            g.Restore(estadoOriginal);
+        }
+
+        private void FrmClover_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel1.Invalidate();
             }
         }
     }

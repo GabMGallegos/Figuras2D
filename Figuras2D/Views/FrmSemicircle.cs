@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D
 {
     public partial class FrmSemicircle : Form
     {
         private Semicircle _semicircleActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
         private const double MinRenderableRadius = 10;
@@ -24,6 +26,10 @@ namespace Figuras2D
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panel2.Paint += panel2_Paint;
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmSemicircle_KeyDown;
+
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
             this.Font = AppTheme.FontMenu;
@@ -117,6 +123,8 @@ namespace Figuras2D
             lblMensaje.Text = "";
 
             _semicircleActual = null;
+            _transformacion.Reiniciar();
+
             panel2.Invalidate();
         }
 
@@ -129,30 +137,68 @@ namespace Figuras2D
 
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.Clear(panel2.BackColor);
 
             float radio = (float)_semicircleActual.Radius;
-            float diametro = radio * 2f;
+            float radioTransformado = radio * _transformacion.FactorEscala;
+            float diametroTransformado = radioTransformado * 2f;
 
-            float x = (panel2.ClientSize.Width - diametro) / 2f;
-            float y = (panel2.ClientSize.Height - radio) / 2f;
+            float centerX = panel2.ClientSize.Width / 2f;
+            float centerY = panel2.ClientSize.Height / 2f;
 
-            Rectangle rectangulo = new Rectangle(
-                (int)x,
-                (int)y,
-                (int)diametro,
-                (int)diametro
-            );
+            PointF centroOriginal = new PointF(centerX, centerY);
+            PointF centroTransformado = _transformacion.Aplicar(centroOriginal, centroOriginal);
+
+            GraphicsState estadoOriginal = graphics.Save();
+
+            graphics.TranslateTransform(centroTransformado.X, centroTransformado.Y);
+            graphics.RotateTransform(_transformacion.AnguloRotacion);
 
             using (GraphicsPath path = new GraphicsPath())
             using (SolidBrush brush = new SolidBrush(Color.Tomato))
             using (Pen pen = new Pen(Color.Black, 2))
             {
-                path.AddArc(rectangulo, 180, 180);
-                path.AddLine(x + diametro, y + radio, x, y + radio);
+                path.AddArc(
+                    -radioTransformado,
+                    -radioTransformado,
+                    diametroTransformado,
+                    diametroTransformado,
+                    180,
+                    180
+                );
+
+                path.AddLine(
+                    radioTransformado,
+                    0,
+                    -radioTransformado,
+                    0
+                );
+
                 path.CloseFigure();
 
                 graphics.FillPath(brush, path);
                 graphics.DrawPath(pen, path);
+            }
+
+            graphics.Restore(estadoOriginal);
+        }
+
+        private void FrmSemicircle_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel2.Invalidate();
             }
         }
     }

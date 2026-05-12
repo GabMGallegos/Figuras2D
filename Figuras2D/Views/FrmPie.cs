@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D
 {
     public partial class FrmPie : Form
     {
         private Pie _pieActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
         private const double MinRenderableRadius = 10;
@@ -24,6 +26,9 @@ namespace Figuras2D
             btnCalcular.Click += btnCalcular_Click;
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panel2.Paint += panel2_Paint;
+
+            this.KeyPreview = true;
+            this.KeyDown += FrmPie_KeyDown;
 
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
@@ -146,6 +151,8 @@ namespace Figuras2D
             lblMensaje.Text = "";
 
             _pieActual = null;
+            _transformacion.Reiniciar();
+
             panel2.Invalidate();
         }
 
@@ -158,12 +165,17 @@ namespace Figuras2D
 
             Graphics graphics = e.Graphics;
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.Clear(panel2.BackColor);
 
             float radio = (float)_pieActual.Radius;
-            float diametro = radio * 2f;
+            float radioTransformado = radio * _transformacion.FactorEscala;
+            float diametroTransformado = radioTransformado * 2f;
 
-            float x = (panel2.ClientSize.Width - diametro) / 2f;
-            float y = (panel2.ClientSize.Height - diametro) / 2f;
+            float centerX = panel2.ClientSize.Width / 2f;
+            float centerY = panel2.ClientSize.Height / 2f;
+
+            PointF centroOriginal = new PointF(centerX, centerY);
+            PointF centroTransformado = _transformacion.Aplicar(centroOriginal, centroOriginal);
 
             float anguloInicial = -(float)_pieActual.StartAngle;
             float anguloVisible = -(float)(_pieActual.EndAngle - _pieActual.StartAngle);
@@ -173,18 +185,54 @@ namespace Figuras2D
                 anguloVisible -= 360f;
             }
 
-            Rectangle rectangulo = new Rectangle(
-                (int)x,
-                (int)y,
-                (int)diametro,
-                (int)diametro
-            );
+            GraphicsState estadoOriginal = graphics.Save();
+
+            graphics.TranslateTransform(centroTransformado.X, centroTransformado.Y);
+            graphics.RotateTransform(_transformacion.AnguloRotacion);
 
             using (SolidBrush brush = new SolidBrush(Color.MediumSlateBlue))
             using (Pen pen = new Pen(Color.Black, 2))
             {
-                graphics.FillPie(brush, rectangulo, anguloInicial, anguloVisible);
-                graphics.DrawPie(pen, rectangulo, anguloInicial, anguloVisible);
+                graphics.FillPie(
+                    brush,
+                    -radioTransformado,
+                    -radioTransformado,
+                    diametroTransformado,
+                    diametroTransformado,
+                    anguloInicial,
+                    anguloVisible
+                );
+
+                graphics.DrawPie(
+                    pen,
+                    -radioTransformado,
+                    -radioTransformado,
+                    diametroTransformado,
+                    diametroTransformado,
+                    anguloInicial,
+                    anguloVisible
+                );
+            }
+
+            graphics.Restore(estadoOriginal);
+        }
+
+        private void FrmPie_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panel2.Invalidate();
             }
         }
     }

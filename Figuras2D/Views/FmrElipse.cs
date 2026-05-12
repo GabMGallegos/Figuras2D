@@ -5,12 +5,14 @@ using System.Globalization;
 using System.Windows.Forms;
 using Figuras2D.Models;
 using Figuras2D.Presenters;
+using Figuras2D.Helpers;
 
 namespace Figuras2D.Views
 {
     public partial class FrmElipse : Form
     {
         private Elipse _elipseActual;
+        private Transformacion2D _transformacion = new Transformacion2D();
 
         private const float Margin = 20f;
 
@@ -23,7 +25,10 @@ namespace Figuras2D.Views
             btnLimpiarCampos.Click += btnLimpiarCampos_Click;
             panelElipse.Paint += panelElipse_Paint;
 
-            //AppTheme (igual que Semicircle)
+            this.KeyPreview = true;
+            this.KeyDown += FrmElipse_KeyDown;
+
+            // AppTheme
             this.BackColor = AppTheme.BgMain;
             this.ForeColor = AppTheme.TextPri;
             this.Font = AppTheme.FontMenu;
@@ -69,17 +74,17 @@ namespace Figuras2D.Views
                 return;
             }
 
-            // Dentro de btnCalcular_Click, después de verificar presenter.IsValid
-            float escalaFija = 5f; // El estándar que estamos usando
+            float escalaFija = 5f;
             double anchoReal = a * 2 * escalaFija;
             double altoReal = b * 2 * escalaFija;
 
-            // Validación de tamaño máximo
             if (anchoReal > panelElipse.ClientSize.Width - (2 * Margin) ||
                 altoReal > panelElipse.ClientSize.Height - (2 * Margin))
             {
                 lblMensaje.Text = "La elipse es demasiado grande para el panel.";
-    _elipseActual = null;
+                lblAreaResultado.Text = presenter.Area.ToString("0.00");
+                lblPerimetroResultado.Text = presenter.Perimeter.ToString("0.00");
+                _elipseActual = null;
                 panelElipse.Invalidate();
                 return;
             }
@@ -103,30 +108,74 @@ namespace Figuras2D.Views
             lblMensaje.Text = "";
 
             _elipseActual = null;
+            _transformacion.Reiniciar();
+
             panelElipse.Invalidate();
         }
 
         private void panelElipse_Paint(object sender, PaintEventArgs e)
         {
-            if (_elipseActual == null) return;
+            if (_elipseActual == null)
+                return;
 
             Graphics g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.Clear(panelElipse.BackColor);
 
-            float escalaFija = 5f; // Usar el mismo factor que en el botón
+            float escalaFija = 5f;
+
             float width = (float)_elipseActual.SemiejeMayor * 2 * escalaFija;
-    float height = (float)_elipseActual.SemiejeMenor * 2 * escalaFija;
+            float height = (float)_elipseActual.SemiejeMenor * 2 * escalaFija;
 
-    // Centrado manual en el panel[cite: 11]
-    float x = (panelElipse.ClientSize.Width - width) / 2;
-            float y = (panelElipse.ClientSize.Height - height) / 2;
+            PointF centroOriginal = new PointF(
+                panelElipse.ClientSize.Width / 2f,
+                panelElipse.ClientSize.Height / 2f
+            );
+
+            PointF centroTransformado = _transformacion.Aplicar(centroOriginal, centroOriginal);
+
+            float widthTransformado = width * _transformacion.FactorEscala;
+            float heightTransformado = height * _transformacion.FactorEscala;
+
+            GraphicsState estadoOriginal = g.Save();
+
+            g.TranslateTransform(centroTransformado.X, centroTransformado.Y);
+            g.RotateTransform(_transformacion.AnguloRotacion);
+
+            RectangleF rectanguloElipse = new RectangleF(
+                -widthTransformado / 2f,
+                -heightTransformado / 2f,
+                widthTransformado,
+                heightTransformado
+            );
 
             using (SolidBrush brush = new SolidBrush(Color.Tomato))
             using (Pen pen = new Pen(Color.Black, 2))
             {
-                g.FillEllipse(brush, x, y, width, height);
-        g.DrawEllipse(pen, x, y, width, height); 
-    }
+                g.FillEllipse(brush, rectanguloElipse);
+                g.DrawEllipse(pen, rectanguloElipse);
+            }
+
+            g.Restore(estadoOriginal);
+        }
+
+        private void FrmElipse_KeyDown(object sender, KeyEventArgs e)
+        {
+            float pasoTraslacion = 10f;
+            float pasoEscala = 1.1f;
+            float pasoRotacion = 10f;
+
+            bool huboTransformacion = _transformacion.ProcesarTecla(
+                e.KeyCode,
+                pasoTraslacion,
+                pasoEscala,
+                pasoRotacion
+            );
+
+            if (huboTransformacion)
+            {
+                panelElipse.Invalidate();
+            }
         }
     }
 }
